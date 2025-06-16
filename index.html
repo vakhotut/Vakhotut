@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Воровские звезды с флагами</title>
+    <title>Выбор языка</title>
     <style>
         * {
             margin: 0;
@@ -12,95 +12,282 @@
         }
         
         body {
-            background: #000;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Arial', sans-serif;
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            padding: 40px;
-        }
-        
-        .star-button {
+            background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #1a2a6c);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow: hidden;
             position: relative;
-            width: 220px;
-            height: 220px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            transition: transform 0.3s ease;
         }
         
-        .star-button:hover {
-            transform: scale(1.08);
-        }
-        
-        .star-bg {
+        /* Анимированный фон */
+        body::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/3f11d4b7b77f2e6aa92c6b1f7ed167b102a2eb8a/foni-papik-pro-vpim-p-kartinki-vorovskie-zvezdi-na-prozrachnom-f-1.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
+            animation: pulse 8s infinite alternate;
         }
         
-        .flag-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 3px solid #fff;
-            box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+        .container {
+            position: relative;
             z-index: 10;
+            text-align: center;
+            padding: 2rem;
         }
         
-        .flag-circle img {
+        h1 {
+            color: white;
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .flags-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+        
+        .flag-btn {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 -10px 25px rgba(0, 0, 0, 0.3),
+                inset 0 10px 25px rgba(255, 255, 255, 0.2);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        
+        .flag-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+            z-index: 2;
+        }
+        
+        .flag-btn::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            z-index: 3;
+        }
+        
+        .flag-content {
+            position: relative;
+            z-index: 1;
+            font-size: 7rem;
+            transform: translateZ(20px);
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .flag-btn:hover {
+            transform: scale(1.08) rotateX(5deg);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.6),
+                inset 0 -10px 25px rgba(0, 0, 0, 0.3),
+                inset 0 10px 25px rgba(255, 255, 255, 0.3);
+        }
+        
+        .flag-btn:active {
+            transform: scale(0.98) rotateX(0deg);
+            box-shadow: 
+                0 5px 15px rgba(0, 0, 0, 0.4),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
+        
+        #georgia {
+            background: linear-gradient(135deg, #ff0000 0%, #ff0000 33%, #ffffff 33%, #ffffff 66%, #ff0000 66%, #ff0000 100%);
+        }
+        
+        #russia {
+            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%, #d52b1e 100%);
+        }
+        
+        #usa {
+            background: linear-gradient(135deg, #3c3b6e 0%, #3c3b6e 40%, #ffffff 40%, #ffffff 100%);
+            background-size: 60px 60px;
+            position: relative;
+        }
+        
+        #usa::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 50%;
+            background: repeating-linear-gradient(
+                0deg,
+                #ffffff,
+                #ffffff 4px,
+                #b22234 4px,
+                #b22234 8px
+            );
+        }
+        
+        .country-name {
+            display: block;
+            color: white;
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        /* Анимации */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.2); opacity: 0.4; }
+        }
+        
+        /* Анимация появления кнопок */
+        .flag-btn {
+            opacity: 0;
+            transform: translateY(50px);
+            animation: appear 0.8s forwards;
+        }
+        
+        #georgia { animation-delay: 0.2s; }
+        #russia { animation-delay: 0.4s; }
+        #usa { animation-delay: 0.6s; }
+        
+        @keyframes appear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .flag-btn {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .flag-content {
+                font-size: 5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flag-btn {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .flag-content {
+                font-size: 4rem;
+            }
+            
+            h1 {
+                font-size: 1.7rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Кнопка с флагом Грузии -->
-        <button class="star-button">
-            <div class="star-bg"></div>
-            <div class="flag-circle">
-                <img src="https://flagcdn.com/w320/ge.png" alt="Флаг Грузии">
-            </div>
-        </button>
-        
-        <!-- Кнопка с флагом России -->
-        <button class="star-button">
-            <div class="star-bg"></div>
-            <div class="flag-circle">
-                <img src="https://flagcdn.com/w320/ru.png" alt="Флаг России">
-            </div>
-        </button>
-        
-        <!-- Кнопка с флагом США -->
-        <button class="star-button">
-            <div class="star-bg"></div>
-            <div class="flag-circle">
-                <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
-            </div>
-        </button>
+        <h1>Выберите ваш язык</h1>
+        <div class="flags-container">
+            <button class="flag-btn" id="georgia">
+                <div class="flag-content">
+                    <span>🇬🇪</span>
+                    <span class="country-name">ქართული</span>
+                </div>
+            </button>
+            <button class="flag-btn" id="russia">
+                <div class="flag-content">
+                    <span>🇷🇺</span>
+                    <span class="country-name">Русский</span>
+                </div>
+            </button>
+            <button class="flag-btn" id="usa">
+                <div class="flag-content">
+                    <span>🇺🇸</span>
+                    <span class="country-name">English</span>
+                </div>
+            </button>
+        </div>
     </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flags = document.querySelectorAll('.flag-btn');
+            
+            flags.forEach(flag => {
+                flag.addEventListener('click', function() {
+                    // Анимация нажатия
+                    this.style.transform = 'scale(0.95)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 200);
+                    
+                    // Определяем язык по ID кнопки
+                    let language;
+                    switch(this.id) {
+                        case 'georgia':
+                            language = 'грузинский';
+                            break;
+                        case 'russia':
+                            language = 'русский';
+                            break;
+                        case 'usa':
+                            language = 'английский';
+                            break;
+                        default:
+                            language = 'язык';
+                    }
+                    
+                    alert(`Вы выбрали ${language} язык!`);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
