@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Главная страница</title>
+  <style>
+    body {
+      background: #000 fixed;
+      background-size: cover;
+      background-attachment: fixed;
+      transition: background-image 2s ease-in-out;
+      min-height: 100vh;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 20px;
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+    }
+    
+    .section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border-radius: 8px;
+      background: rgba(30, 30, 30, 0.5);
+    }
+    
+    h2 {
+      border-bottom: 2px solid #00c3ff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      color: #00c3ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Блок контактов -->
+    <section class="section contacts">
+      <h2>Всегда актуальные контакты</h2>
+      <div id="contacts-content">
+        <!-- Контакты будут загружаться динамически -->
+      </div>
+    </section>
+    
+    <!-- Блок новостей -->
+    <section class="section news">
+      <h2>Последние новости</h2>
+      <div id="news-content">
+        <!-- Новости будут загружаться из Telegram -->
+      </div>
+    </section>
+    
+    <!-- Блок отзывов -->
+    <section class="section reviews">
+      <h2>Отзывы клиентов</h2>
+      <div id="reviews-content">
+        <!-- Отзывы будут загружаться из Telegram -->
+      </div>
+    </section>
+  </div>
+  
+  <script>
+    // Список фоновых изображений
+    const backgrounds = [
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/0x1900-000000-80-0-0.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/0x1900-000000-80-d0-0.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/6cc05436b5a545538670632dc63ea567H3000W3000_320_320.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/9a79a3cfcfe5439ba1ea3e8abba69df9H1400W1400_320_320.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/N84_pIS2wAc.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/PwHs-DgM5ro.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/artworks-H2YbyIwuyBsrWRxY-thk5EA-t1080x1080.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/cfZemMCT9ko.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/jRaBykez5PA.jpg',
+      'https://raw.githubusercontent.com/vakhotut/Vakhotut/130a8c2631fc94b7b6ec0896b8107a7922732d9b/nJCDNWCaBzM.jpg'
+    ];
+    
+    let currentBg = 0;
+    
+    // Функция смены фона
+    function changeBackground() {
+      currentBg = (currentBg + 1) % backgrounds.length;
+      document.body.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
+    }
+    
+    // Инициализация
+    window.addEventListener('load', () => {
+      // Начальный фон
+      document.body.style.backgroundImage = `url('${backgrounds[0]}')`;
+      
+      // Смена фона каждые 5 секунд
+      setInterval(changeBackground, 5000);
+      
+      // Загрузка данных
+      loadContacts();
+      loadNews();
+      loadReviews();
+    });
+    
+    // Загрузка контактов (заглушка)
+    function loadContacts() {
+      const contacts = [
+        {name: "Телефон", value: "+7 (XXX) XXX-XX-XX"},
+        {name: "Email", value: "contact@example.com"},
+        {name: "Telegram", value: "@your_channel"}
+      ];
+      
+      let html = '<div class="contact-list">';
+      contacts.forEach(contact => {
+        html += `<div class="contact-item">
+          <strong>${contact.name}:</strong> ${contact.value}
+        </div>`;
+      });
+      html += '</div>';
+      
+      document.getElementById('contacts-content').innerHTML = html;
+    }
+    
+    // Загрузка новостей (заглушка)
+    function loadNews() {
+      document.getElementById('news-content').innerHTML = `
+        <div class="news-item">
+          <h3>Интеграция с Telegram в процессе</h3>
+          <p>Скоро здесь появятся актуальные новости из нашего Telegram-канала</p>
+          <small>Дата: ${new Date().toLocaleDateString()}</small>
+        </div>
+      `;
+    }
+    
+    // Загрузка отзывов (заглушка)
+    function loadReviews() {
+      document.getElementById('reviews-content').innerHTML = `
+        <div class="review-item">
+          <p>Скоро здесь появятся отзывы из нашего Telegram-канала</p>
+          <div class="rating">★★★★★</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
