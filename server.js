@@ -4,7 +4,8 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
+// Исправленный импорт адаптера
+const { JSONFileSync } = require('lowdb/node'); // Изменено здесь
 const { Telegraf } = require('telegraf');
 const crypto = require('crypto');
 const path = require('path');
@@ -13,11 +14,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Инициализация базы данных
-const adapter = new FileSync('db.json');
+const adapter = new JSONFileSync('db.json'); // Изменено здесь
 const db = low(adapter);
 
-// Инициализация структуры БД
-db.defaults({
+// Инициализация структуры БД (обновленная логика)
+db.read(); // Читаем данные перед доступом
+db.data ||= { // Устанавливаем значения по умолчанию
   contacts: {
     bot: { title: "Наш бот", description: "Быстрые ответы 24/7", link: "t.me/our_support_bot" },
     channel: { title: "Наш канал", description: "Актуальные новости", link: "t.me/our_news_channel" },
@@ -39,7 +41,8 @@ db.defaults({
     news: 0,
     reviews: 0
   }
-}).write();
+};
+db.write(); // Сохраняем начальные данные
 
 // Middleware
 app.use(cors());
@@ -56,7 +59,7 @@ app.use(session({
 const newsBot = new Telegraf(db.get('telegram.newsBotToken').value());
 const reviewsBot = new Telegraf(db.get('telegram.reviewsBotToken').value());
 
-// Обработчики Telegram
+// Обработчики Telegram (остаются без изменений)
 newsBot.on('channel_post', (ctx) => {
   const message = ctx.update.channel_post;
   if (message.text) {
@@ -91,7 +94,7 @@ reviewsBot.on('message', (ctx) => {
   }
 });
 
-// Запуск ботов
+// Запуск ботов (остается без изменений)
 if (db.get('telegram.newsBotToken').value()) {
   newsBot.launch();
 }
@@ -99,7 +102,7 @@ if (db.get('telegram.reviewsBotToken').value()) {
   reviewsBot.launch();
 }
 
-// Middleware проверки аутентификации
+// Middleware проверки аутентификации (остается без изменений)
 const isAuthenticated = (req, res, next) => {
   if (req.session && req.session.authenticated) {
     return next();
@@ -107,7 +110,7 @@ const isAuthenticated = (req, res, next) => {
   res.status(401).json({ error: 'Требуется аутентификация' });
 };
 
-// API Endpoints
+// API Endpoints (остаются без изменений)
 app.get('/api/data', (req, res) => {
   res.json({
     contacts: db.get('contacts').value(),
@@ -160,12 +163,12 @@ app.post('/api/update-telegram', isAuthenticated, (req, res) => {
   res.json({ success: true });
 });
 
-// Отдаем фронтенд
+// Отдаем фронтенд (остается без изменений)
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Запуск сервера
+// Запуск сервера (остается без изменений)
 app.listen(PORT, () => {
   console.log(`Сервер запущен на порту ${PORT}`);
   console.log(`Админ-логин: ${db.get('admin.login').value()}`);
