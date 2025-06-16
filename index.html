@@ -9,6 +9,7 @@
     body {
       background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/3ee4528df57a29bf72b1360199eee03fa4f96c46/0x1900-000000-80-d0-0.jpg') no-repeat center center fixed;
       background-size: cover;
+      background-attachment: fixed; /* Стабилизация фона */
       position:relative;overflow:hidden;
       font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
       min-height:100vh;
@@ -25,7 +26,6 @@
     }
     .flag-star {
       position:relative;
-      width:320px;height:320px;
       display:flex;justify-content:center;align-items:center;
       filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
     }
@@ -36,7 +36,8 @@
     .star-svg svg {width:100%;height:100%}
     .flag-button {
       position:relative;
-      width:180px;height:180px;border-radius:50%;overflow:hidden;
+      /* Уменьшенный размер кнопки */
+      width:150px;height:150px;border-radius:50%;overflow:hidden;
       cursor:pointer;z-index:2;
       border:3px solid rgba(255,255,255,.9);
       background:#000;
@@ -83,18 +84,15 @@
     
     @media(max-width: 1100px){
       .buttons-container { gap: 40px; padding: 60px 20px; }
-      .flag-star { width: 280px; height: 280px; }
-      .flag-button { width: 150px; height: 150px; }
+      .flag-button { width: 130px; height: 130px; }
     }
     
     @media(max-width: 768px){
       .buttons-container { gap: 50px; flex-wrap: wrap; padding: 70px 20px; }
-      .flag-star { width: 240px; height: 240px; }
     }
     
     @media(max-width:480px){
-      .flag-star {width:200px;height:200px}
-      .flag-button {width:120px;height:120px}
+      .flag-button {width:110px;height:110px}
     }
   </style>
 </head>
@@ -424,53 +422,77 @@
   </div>
   
   <script>
-    // Создаем декоративные элементы фона
-    const bgContainer = document.querySelector('.bg-elements');
-    const numElements = 15;
-    
-    for (let i = 0; i < numElements; i++) {
-      const element = document.createElement('div');
-      element.classList.add('bg-element');
+    // Функция для обновления размеров звезды пропорционально кнопке
+    function updateStarSizes() {
+      const flagStars = document.querySelectorAll('.flag-star');
       
-      // Случайный размер и позиция
-      const size = Math.random() * 120 + 30;
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      
-      element.style.width = `${size}px`;
-      element.style.height = `${size}px`;
-      element.style.left = `${x}%`;
-      element.style.top = `${y}%`;
-      
-      // Анимация движения
-      element.style.animation = `move${i % 3 + 1} ${15 + Math.random() * 20}s infinite linear`;
-      
-      bgContainer.appendChild(element);
+      flagStars.forEach(star => {
+        const button = star.querySelector('.flag-button');
+        if (button) {
+          const buttonSize = button.offsetWidth;
+          // Размер звезды = размер кнопки * 1.777 (соотношение 320/180)
+          const starSize = buttonSize * 1.777;
+          star.style.width = `${starSize}px`;
+          star.style.height = `${starSize}px`;
+        }
+      });
     }
     
-    // Добавляем стили для анимации
-    const style = document.createElement('style');
-    style.innerHTML = `
-      @keyframes move1 {
-        0% { transform: translate(0, 0); }
-        25% { transform: translate(20px, 20px); }
-        50% { transform: translate(40px, 0); }
-        75% { transform: translate(20px, -20px); }
-        100% { transform: translate(0, 0); }
+    // Инициализация размеров при загрузке
+    window.addEventListener('load', () => {
+      updateStarSizes();
+      
+      // Создаем декоративные элементы фона
+      const bgContainer = document.querySelector('.bg-elements');
+      const numElements = 15;
+      
+      for (let i = 0; i < numElements; i++) {
+        const element = document.createElement('div');
+        element.classList.add('bg-element');
+        
+        // Случайный размер и позиция
+        const size = Math.random() * 120 + 30;
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        
+        element.style.width = `${size}px`;
+        element.style.height = `${size}px`;
+        element.style.left = `${x}%`;
+        element.style.top = `${y}%`;
+        
+        // Анимация движения
+        element.style.animation = `move${i % 3 + 1} ${15 + Math.random() * 20}s infinite linear`;
+        
+        bgContainer.appendChild(element);
       }
-      @keyframes move2 {
-        0% { transform: translate(0, 0); }
-        25% { transform: translate(-15px, 15px); }
-        50% { transform: translate(-30px, 0); }
-        75% { transform: translate(-15px, -15px); }
-        100% { transform: translate(0, 0); }
-      }
-      @keyframes move3 {
-        0% { transform: translate(0, 0) rotate(0deg); }
-        100% { transform: translate(30px, 30px) rotate(360deg); }
-      }
-    `;
-    document.head.appendChild(style);
+      
+      // Добавляем стили для анимации
+      const style = document.createElement('style');
+      style.innerHTML = `
+        @keyframes move1 {
+          0% { transform: translate(0, 0); }
+          25% { transform: translate(20px, 20px); }
+          50% { transform: translate(40px, 0); }
+          75% { transform: translate(20px, -20px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes move2 {
+          0% { transform: translate(0, 0); }
+          25% { transform: translate(-15px, 15px); }
+          50% { transform: translate(-30px, 0); }
+          75% { transform: translate(-15px, -15px); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes move3 {
+          0% { transform: translate(0, 0) rotate(0deg); }
+          100% { transform: translate(30px, 30px) rotate(360deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    });
+    
+    // Обновление размеров при изменении окна
+    window.addEventListener('resize', updateStarSizes);
   </script>
 </body>
 </html>
