@@ -17,242 +17,149 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
         
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 80px;
-            padding: 40px;
-        }
-        
-        .title {
-            color: #fff;
-            font-size: 42px;
-            margin-bottom: 60px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 15px rgba(255, 50, 50, 0.9);
-            animation: glow 2s infinite alternate;
-        }
-        
-        @keyframes glow {
-            from { text-shadow: 0 0 10px rgba(255, 50, 50, 0.7); }
-            to { text-shadow: 0 0 20px rgba(255, 50, 50, 1), 0 0 30px rgba(255, 0, 0, 0.8); }
-        }
-        
-        .stars-row {
-            display: flex;
-            justify-content: center;
-            gap: 100px;
-            flex-wrap: wrap;
+            gap: 60px;
         }
         
         .star-container {
             position: relative;
-            width: 280px;
-            height: 280px;
+            width: 200px;
+            height: 180px;
             display: flex;
             justify-content: center;
-            filter: drop-shadow(0 0 15px rgba(255, 30, 30, 0.7));
-            transition: all 0.4s ease;
-        }
-        
-        .star-container:hover {
-            transform: translateY(-10px);
-            filter: drop-shadow(0 0 25px rgba(255, 50, 50, 0.9));
         }
         
         .vorovskaya-zvezda {
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 90px solid transparent;
-            border-right: 90px solid transparent;
-            border-bottom: 150px solid #c62828;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid #c62828;
             z-index: 1;
-            animation: pulse 3s infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 50, 50, 0.7));
         }
         
         .vorovskaya-zvezda:after {
             content: "";
             position: absolute;
-            left: -90px;
-            top: 150px;
+            left: -60px;
+            top: 100px;
             width: 0;
             height: 0;
-            border-left: 90px solid transparent;
-            border-right: 90px solid transparent;
-            border-top: 150px solid #c62828;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 0.9; }
-            50% { opacity: 1; }
-            100% { opacity: 0.9; }
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-top: 100px solid #c62828;
         }
         
         .flag-btn {
             position: relative;
             z-index: 2;
-            width: 180px;
-            height: 180px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 5px solid #fff;
+            border: 4px solid #fff;
+            background-size: cover;
+            background-position: center;
             cursor: pointer;
-            transform: translateY(75px);
+            transform: translateY(40px);
             transition: all 0.3s ease;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
         
         .flag-btn:hover {
-            transform: translateY(75px) scale(1.15);
-            box-shadow: 0 0 35px rgba(255, 255, 255, 0.8);
+            transform: translateY(40px) scale(1.1);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
         }
         
         .ge-flag {
-            background: 
-                linear-gradient(135deg, 
-                #fff 25%, #ff0000 25%, #ff0000 50%, 
-                #fff 50%, #fff 75%, #ff0000 75%, #ff0000);
-            background-size: 100px 100px;
+            background-image: 
+                linear-gradient(135deg, #fff 25%, #ff0000 25%, #ff0000 50%, 
+                #fff 50%, #fff 75%, #ff0000 75%, #ff0000 100%);
+            background-size: 70px 70px;
         }
         
         .ru-flag {
-            background: 
+            background-image: 
                 linear-gradient(to bottom, 
                 #fff 33%, 
                 #0039a6 33%, #0039a6 66%, 
-                #d52b1e 66%, #d52b1e);
+                #d52b1e 66%, #d52b1e 100%);
         }
         
         .en-flag {
-            background: 
+            background-color: #ffffff;
+            background-image: 
                 linear-gradient(90deg, transparent 45%, #C8102E 45%, #C8102E 55%, transparent 55%),
-                linear-gradient(180deg, transparent 45%, #C8102E 45%, #C8102E 55%, transparent 55%),
-                #ffffff;
+                linear-gradient(180deg, transparent 45%, #C8102E 45%, #C8102E 55%, transparent 55%);
         }
         
-        .tooltip {
-            position: absolute;
-            bottom: -45px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.8);
+        .label {
             color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 20px;
+            margin-top: 70px;
+            font-size: 18px;
             text-align: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            min-width: 140px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            z-index: 10;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
         }
         
-        .star-container:hover .tooltip {
-            opacity: 1;
-        }
-        
-        .background-stars {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration, 3s) infinite ease-in-out;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 1; }
+        .title {
+            color: #fff;
+            font-size: 32px;
+            margin-bottom: 50px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(255, 50, 50, 0.8);
         }
     </style>
 </head>
 <body>
-    <div class="background-stars" id="stars-container"></div>
-    
     <div class="container">
         <h1 class="title">Выберите язык</h1>
         
-        <div class="stars-row">
-            <div class="star-container">
-                <div class="vorovskaya-zvezda"></div>
-                <button class="flag-btn ge-flag"></button>
-                <div class="tooltip">Грузинский</div>
-            </div>
-            
-            <div class="star-container">
-                <div class="vorovskaya-zvezda"></div>
-                <button class="flag-btn ru-flag"></button>
-                <div class="tooltip">Русский</div>
-            </div>
-            
-            <div class="star-container">
-                <div class="vorovskaya-zvezda"></div>
-                <button class="flag-btn en-flag"></button>
-                <div class="tooltip">Английский</div>
-            </div>
+        <div class="star-container">
+            <div class="vorovskaya-zvezda"></div>
+            <button class="flag-btn ge-flag"></button>
+            <div class="label">Грузинский</div>
+        </div>
+        
+        <div class="star-container">
+            <div class="vorovskaya-zvezda"></div>
+            <button class="flag-btn ru-flag"></button>
+            <div class="label">Русский</div>
+        </div>
+        
+        <div class="star-container">
+            <div class="vorovskaya-zvezda"></div>
+            <button class="flag-btn en-flag"></button>
+            <div class="label">Английский</div>
         </div>
     </div>
 
     <script>
-        // Создание звездного фона
-        const starsContainer = document.getElementById('stars-container');
-        const starCount = 150;
-        
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
-            
-            const size = Math.random() * 3;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            
-            star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
-            star.style.animationDelay = `${Math.random() * 5}s`;
-            
-            starsContainer.appendChild(star);
-        }
-        
-        // Обработчики для кнопок
         document.querySelectorAll('.flag-btn').forEach(button => {
             button.addEventListener('click', function() {
-                const container = this.closest('.star-container');
-                const tooltip = container.querySelector('.tooltip');
-                const language = tooltip.textContent;
+                const flagType = this.classList[1];
+                let language;
                 
-                // Анимация нажатия
-                this.style.transform = 'translateY(75px) scale(0.9)';
+                if (flagType === 'ge-flag') language = 'Грузинский';
+                else if (flagType === 'ru-flag') language = 'Русский';
+                else if (flagType === 'en-flag') language = 'Английский';
                 
-                // Подсветка выбранного элемента
-                document.querySelectorAll('.star-container').forEach(el => {
-                    el.style.filter = 'drop-shadow(0 0 15px rgba(255, 30, 30, 0.4))';
-                });
+                alert(`Выбран ${language} язык`);
                 
-                container.style.filter = 'drop-shadow(0 0 30px rgba(255, 200, 50, 0.9))';
-                
+                // Добавляем анимацию нажатия
+                this.style.transform = 'translateY(40px) scale(0.95)';
                 setTimeout(() => {
-                    this.style.transform = 'translateY(75px)';
-                    alert(`Выбран ${language} язык`);
+                    this.style.transform = 'translateY(40px)';
                 }, 300);
             });
         });
