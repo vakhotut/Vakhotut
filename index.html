@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Воровская звезда с флагами</title>
+    <title>Воровские звезды с флагами</title>
     <style>
         * {
             margin: 0;
@@ -42,6 +42,19 @@
             transform: scale(1.08);
         }
         
+        .star-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/3f11d4b7b77f2e6aa92c6b1f7ed167b102a2eb8a/foni-papik-pro-vpim-p-kartinki-vorovskie-zvezdi-na-prozrachnom-f-1.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
+        }
+        
         .flag-circle {
             position: absolute;
             top: 50%;
@@ -61,47 +74,32 @@
             height: 100%;
             object-fit: cover;
         }
-        
-        /* Стили для воровской звезды (точная SVG) */
-        .thief-star {
-            fill: #D4AF37; /* Золотой цвет */
-            stroke: #000;
-            stroke-width: 2;
-            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Кнопка с флагом Грузии -->
         <button class="star-button">
+            <div class="star-bg"></div>
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/ge.png" alt="Флаг Грузии">
             </div>
-            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
-                <!-- Точная воровская звезда (8 лучей) -->
-                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
-            </svg>
         </button>
         
         <!-- Кнопка с флагом России -->
         <button class="star-button">
+            <div class="star-bg"></div>
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/ru.png" alt="Флаг России">
             </div>
-            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
-                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
-            </svg>
         </button>
         
         <!-- Кнопка с флагом США -->
         <button class="star-button">
+            <div class="star-bg"></div>
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
             </div>
-            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
-                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
-            </svg>
         </button>
     </div>
 </body>
