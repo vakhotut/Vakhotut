@@ -517,10 +517,22 @@
     document.querySelectorAll('.flag-button').forEach(button => {
       button.addEventListener('click', function() {
         const country = this.querySelector('img').alt.replace('Флаг ', '');
+        let lang = 'ru'; // По умолчанию
+        
+        // Определение языка по стране
+        if (country === 'Грузия') lang = 'ka';
+        else if (country === 'США') lang = 'en';
+        
+        // Включаем аудио перед переходом
+        const audio = document.getElementById('backgroundAudio');
+        audio.volume = 0.3;
+        audio.play().catch(e => console.log("Автовоспроизведение заблокировано"));
+        
         document.body.style.opacity = '0';
         
         setTimeout(() => {
-          window.location.href = `main.html?country=${encodeURIComponent(country)}`;
+          // Передаем язык в параметре URL
+          window.location.href = `main.html?lang=${lang}`;
         }, 1000);
       });
     });
