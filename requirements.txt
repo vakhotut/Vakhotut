@@ -1,7 +1,0 @@
-uvicorn
-express-session==1.18.0
-body-parser==1.20.3
-cors==2.8.5
-lowdb==7.0.0
-telegraf==4.13.0
-dotenv==16.4.0
