@@ -1,0 +1,1024 @@
+[file name]: admin.html
+[file content begin]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #fff;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      background: rgba(25, 25, 45, 0.8);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 195, 255, 0.2);
+    }
+    
+    /* Login Screen */
+    #login-screen {
+      padding: 60px 40px;
+      text-align: center;
+    }
+    
+    .login-header {
+      margin-bottom: 40px;
+    }
+    
+    .login-header h1 {
+      font-size: 36px;
+      margin-bottom: 15px;
+      color: #00c3ff;
+      text-shadow: 0 0 15px rgba(0, 195, 255, 0.5);
+    }
+    
+    .login-header p {
+      color: #aaa;
+      font-size: 18px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .login-form {
+      max-width: 500px;
+      margin: 0 auto;
+      background: rgba(30, 30, 50, 0.6);
+      padding: 40px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 195, 255, 0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 25px;
+      text-align: left;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: #00c3ff;
+      font-weight: 500;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 15px;
+      background: rgba(20, 20, 35, 0.7);
+      border: 1px solid rgba(0, 195, 255, 0.3);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: #00c3ff;
+      box-shadow: 0 0 15px rgba(0, 195, 255, 0.3);
+    }
+    
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(to right, #0062ff, #00c3ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 20px;
+    }
+    
+    .login-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 195, 255, 0.3);
+    }
+    
+    .error-message {
+      color: #ff4d7d;
+      margin-top: 15px;
+      text-align: center;
+      min-height: 24px;
+    }
+    
+    /* Admin Panel */
+    #admin-panel {
+      display: none;
+      padding: 30px;
+    }
+    
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(0, 195, 255, 0.3);
+    }
+    
+    .admin-header h1 {
+      font-size: 32px;
+      color: #00c3ff;
+      text-shadow: 0 0 15px rgba(0, 195, 255, 0.3);
+    }
+    
+    .logout-btn {
+      padding: 10px 20px;
+      background: rgba(255, 75, 125, 0.2);
+      border: 1px solid rgba(255, 75, 125, 0.4);
+      border-radius: 8px;
+      color: #ff4d7d;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .logout-btn:hover {
+      background: rgba(255, 75, 125, 0.3);
+    }
+    
+    .tabs {
+      display: flex;
+      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .tab {
+      padding: 15px 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+    }
+    
+    .tab.active {
+      color: #00c3ff;
+      border-bottom: 3px solid #00c3ff;
+    }
+    
+    .tab:hover:not(.active) {
+      background: rgba(0, 195, 255, 0.1);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 25px;
+      color: #00c3ff;
+      padding-bottom: 15px;
+      border-bottom: 1px solid rgba(0, 195, 255, 0.2);
+    }
+    
+    .form-card {
+      background: rgba(30, 30, 50, 0.6);
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 1px solid rgba(0, 195, 255, 0.1);
+    }
+    
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -15px;
+    }
+    
+    .form-col {
+      flex: 1;
+      min-width: 300px;
+      padding: 0 15px;
+      margin-bottom: 20px;
+    }
+    
+    .save-btn {
+      padding: 12px 30px;
+      background: linear-gradient(to right, #00c853, #00c3ff);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .save-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0, 200, 83, 0.3);
+    }
+    
+    .data-list {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    
+    .data-item {
+      background: rgba(30, 30, 50, 0.6);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .data-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+    
+    .data-title {
+      font-weight: 600;
+      color: #00c3ff;
+    }
+    
+    .data-date {
+      color: #aaa;
+      font-size: 14px;
+    }
+    
+    .delete-btn {
+      padding: 5px 10px;
+      background: rgba(255, 75, 125, 0.2);
+      border: 1px solid rgba(255, 75, 125, 0.4);
+      border-radius: 6px;
+      color: #ff4d7d;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .delete-btn:hover {
+      background: rgba(255, 75, 125, 0.3);
+    }
+    
+    .status-message {
+      padding: 15px;
+      border-radius: 8px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+    }
+    
+    .status-success {
+      background: rgba(0, 200, 83, 0.2);
+      border: 1px solid rgba(0, 200, 83, 0.4);
+      color: #00c853;
+    }
+    
+    .status-error {
+      background: rgba(255, 75, 125, 0.2);
+      border: 1px solid rgba(255, 75, 125, 0.4);
+      color: #ff4d7d;
+    }
+    
+    @media (max-width: 768px) {
+      .login-form, .form-card {
+        padding: 25px;
+      }
+      
+      .tabs {
+        flex-wrap: wrap;
+      }
+      
+      .tab {
+        flex: 1;
+        min-width: 120px;
+        text-align: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .login-form, .form-card {
+        padding: 20px;
+      }
+      
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .logout-btn {
+        margin-top: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Screen -->
+    <div id="login-screen">
+      <div class="login-header">
+        <h1><i class="fas fa-lock"></i> Административная панель</h1>
+        <p>Введите учетные данные для доступа к управлению контентом</p>
+      </div>
+      
+      <div class="login-form">
+        <div class="form-group">
+          <label for="username"><i class="fas fa-user"></i> Логин</label>
+          <input type="text" id="username" placeholder="Введите логин">
+        </div>
+        
+        <div class="form-group">
+          <label for="password"><i class="fas fa-key"></i> Пароль</label>
+          <input type="password" id="password" placeholder="Введите пароль">
+        </div>
+        
+        <button class="login-btn" id="login-btn">
+          <i class="fas fa-sign-in-alt"></i> Войти
+        </button>
+        
+        <div class="error-message" id="login-error"></div>
+      </div>
+    </div>
+    
+    <!-- Admin Panel -->
+    <div id="admin-panel">
+      <div class="admin-header">
+        <h1><i class="fas fa-cogs"></i> Панель управления</h1>
+        <button class="logout-btn" id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Выйти
+        </button>
+      </div>
+      
+      <div class="tabs">
+        <div class="tab active" data-tab="contacts">Контакты</div>
+        <div class="tab" data-tab="telegram">Telegram</div>
+        <div class="tab" data-tab="news">Новости</div>
+        <div class="tab" data-tab="reviews">Отзывы</div>
+      </div>
+      
+      <div class="status-message" id="status-message"></div>
+      
+      <!-- Contacts Tab -->
+      <div class="tab-content active" id="contacts-tab">
+        <h2 class="section-title"><i class="fas fa-address-book"></i> Управление контактами</h2>
+        
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-col">
+              <label for="bot-title">Бот: Заголовок</label>
+              <input type="text" id="bot-title">
+            </div>
+            <div class="form-col">
+              <label for="bot-desc">Бот: Описание</label>
+              <input type="text" id="bot-desc">
+            </div>
+            <div class="form-col">
+              <label for="bot-link">Бот: Ссылка</label>
+              <input type="text" id="bot-link">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <label for="channel-title">Канал: Заголовок</label>
+              <input type="text" id="channel-title">
+            </div>
+            <div class="form-col">
+              <label for="channel-desc">Канал: Описание</label>
+              <input type="text" id="channel-desc">
+            </div>
+            <div class="form-col">
+              <label for="channel-link">Канал: Ссылка</label>
+              <input type="text" id="channel-link">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <label for="chat-title">Чат: Заголовок</label>
+              <input type="text" id="chat-title">
+            </div>
+            <div class="form-col">
+              <label for="chat-desc">Чат: Описание</label>
+              <input type="text" id="chat-desc">
+            </div>
+            <div class="form-col">
+              <label for="chat-link">Чат: Ссылка</label>
+              <input type="text" id="chat-link">
+            </div>
+          </div>
+          
+          <button class="save-btn" id="save-contacts">
+            <i class="fas fa-save"></i> Сохранить контакты
+          </button>
+        </div>
+      </div>
+      
+      <!-- Telegram Tab -->
+      <div class="tab-content" id="telegram-tab">
+        <h2 class="section-title"><i class="fab fa-telegram"></i> Настройки Telegram</h2>
+        
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-col">
+              <label for="news-bot-token">Токен бота для новостей</label>
+              <input type="text" id="news-bot-token">
+            </div>
+            <div class="form-col">
+              <label for="reviews-bot-token">Токен бота для отзывов</label>
+              <input type="text" id="reviews-bot-token">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-col">
+              <label for="news-channel-id">ID канала для новостей</label>
+              <input type="text" id="news-channel-id">
+            </div>
+            <div class="form-col">
+              <label for="reviews-chat-id">ID чата для отзывов</label>
+              <input type="text" id="reviews-chat-id">
+            </div>
+          </div>
+          
+          <button class="save-btn" id="save-telegram">
+            <i class="fas fa-save"></i> Сохранить настройки
+          </button>
+        </div>
+      </div>
+      
+      <!-- News Tab -->
+      <div class="tab-content" id="news-tab">
+        <h2 class="section-title"><i class="fas fa-newspaper"></i> Управление новостями</h2>
+        
+        <div class="data-list" id="news-list">
+          <!-- News items will be loaded here -->
+        </div>
+      </div>
+      
+      <!-- Reviews Tab -->
+      <div class="tab-content" id="reviews-tab">
+        <h2 class="section-title"><i class="fas fa-star"></i> Управление отзывами</h2>
+        
+        <div class="data-list" id="reviews-list">
+          <!-- Reviews items will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="admin-panel.js"></script>
+</body>
+</html>
+[file content end]
+
+[file name]: admin-panel.js
+[file content begin]
+document.addEventListener('DOMContentLoaded', () => {
+  const API_BASE = '/api';
+  const loginScreen = document.getElementById('login-screen');
+  const adminPanel = document.getElementById('admin-panel');
+  const loginBtn = document.getElementById('login-btn');
+  const logoutBtn = document.getElementById('logout-btn');
+  const loginError = document.getElementById('login-error');
+  const statusMessage = document.getElementById('status-message');
+  
+  // Tab navigation
+  const tabs = document.querySelectorAll('.tab');
+  const tabContents = document.querySelectorAll('.tab-content');
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      tabs.forEach(t => t.classList.remove('active'));
+      tabContents.forEach(tc => tc.classList.remove('active'));
+      
+      // Add active class to current tab
+      tab.classList.add('active');
+      const tabId = tab.getAttribute('data-tab');
+      document.getElementById(`${tabId}-tab`).classList.add('active');
+    });
+  });
+  
+  // Login functionality
+  loginBtn.addEventListener('click', async () => {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    
+    if (!username || !password) {
+      showError('Пожалуйста, заполните все поля');
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login: username, password })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          loadAdminPanel();
+        } else {
+          showError('Неверные учетные данные');
+        }
+      } else {
+        const error = await response.text();
+        showError('Ошибка входа: ' + error);
+      }
+    } catch (error) {
+      showError('Ошибка сети: ' + error.message);
+    }
+  });
+  
+  // Logout functionality
+  logoutBtn.addEventListener('click', async () => {
+    try {
+      await fetch(`${API_BASE}/logout`, { method: 'POST' });
+      loginScreen.style.display = 'block';
+      adminPanel.style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    } catch (error) {
+      showStatus('Ошибка при выходе: ' + error.message, 'error');
+    }
+  });
+  
+  // Save contacts
+  document.getElementById('save-contacts').addEventListener('click', async () => {
+    const contacts = {
+      bot: {
+        title: document.getElementById('bot-title').value,
+        description: document.getElementById('bot-desc').value,
+        link: document.getElementById('bot-link').value
+      },
+      channel: {
+        title: document.getElementById('channel-title').value,
+        description: document.getElementById('channel-desc').value,
+        link: document.getElementById('channel-link').value
+      },
+      chat: {
+        title: document.getElementById('chat-title').value,
+        description: document.getElementById('chat-desc').value,
+        link: document.getElementById('chat-link').value
+      }
+    };
+    
+    try {
+      const response = await fetch(`${API_BASE}/update-contacts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contacts })
+      });
+      
+      if (response.ok) {
+        showStatus('Контакты успешно обновлены!', 'success');
+      } else {
+        const error = await response.text();
+        showStatus('Ошибка обновления: ' + error, 'error');
+      }
+    } catch (error) {
+      showStatus('Ошибка сети: ' + error.message, 'error');
+    }
+  });
+  
+  // Save Telegram settings
+  document.getElementById('save-telegram').addEventListener('click', async () => {
+    const telegram = {
+      newsBotToken: document.getElementById('news-bot-token').value,
+      reviewsBotToken: document.getElementById('reviews-bot-token').value,
+      newsChannelId: document.getElementById('news-channel-id').value,
+      reviewsChatId: document.getElementById('reviews-chat-id').value
+    };
+    
+    try {
+      const response = await fetch(`${API_BASE}/update-telegram`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegram })
+      });
+      
+      if (response.ok) {
+        showStatus('Настройки Telegram успешно обновлены!', 'success');
+      } else {
+        const error = await response.text();
+        showStatus('Ошибка обновления: ' + error, 'error');
+      }
+    } catch (error) {
+      showStatus('Ошибка сети: ' + error.message, 'error');
+    }
+  });
+  
+  // Load admin panel and data
+  async function loadAdminPanel() {
+    try {
+      const response = await fetch(`${API_BASE}/data`);
+      
+      if (response.status === 401) {
+        showError('Требуется авторизация');
+        return;
+      }
+      
+      if (!response.ok) {
+        throw new Error('Ошибка загрузки данных');
+      }
+      
+      const data = await response.json();
+      
+      // Populate contacts
+      document.getElementById('bot-title').value = data.contacts.bot.title;
+      document.getElementById('bot-desc').value = data.contacts.bot.description;
+      document.getElementById('bot-link').value = data.contacts.bot.link;
+      
+      document.getElementById('channel-title').value = data.contacts.channel.title;
+      document.getElementById('channel-desc').value = data.contacts.channel.description;
+      document.getElementById('channel-link').value = data.contacts.channel.link;
+      
+      document.getElementById('chat-title').value = data.contacts.chat.title;
+      document.getElementById('chat-desc').value = data.contacts.chat.description;
+      document.getElementById('chat-link').value = data.contacts.chat.link;
+      
+      // Populate Telegram settings
+      document.getElementById('news-bot-token').value = data.telegram.newsBotToken || '';
+      document.getElementById('reviews-bot-token').value = data.telegram.reviewsBotToken || '';
+      document.getElementById('news-channel-id').value = data.telegram.newsChannelId || '';
+      document.getElementById('reviews-chat-id').value = data.telegram.reviewsChatId || '';
+      
+      // Load news
+      loadNews(data.news);
+      
+      // Load reviews
+      loadReviews(data.reviews);
+      
+      // Show admin panel
+      loginScreen.style.display = 'none';
+      adminPanel.style.display = 'block';
+      showStatus('Успешная авторизация!', 'success');
+      
+      // Hide status after 3 seconds
+      setTimeout(() => {
+        statusMessage.style.display = 'none';
+      }, 3000);
+      
+    } catch (error) {
+      showError('Ошибка загрузки данных: ' + error.message);
+    }
+  }
+  
+  // Load news into the list
+  function loadNews(news) {
+    const newsList = document.getElementById('news-list');
+    newsList.innerHTML = '';
+    
+    news.forEach(item => {
+      const newsItem = document.createElement('div');
+      newsItem.className = 'data-item';
+      
+      const date = new Date(item.date).toLocaleString();
+      
+      newsItem.innerHTML = `
+        <div class="data-header">
+          <div class="data-title">${item.title}</div>
+          <div class="data-date">${date}</div>
+        </div>
+        <div class="data-content">${item.content}</div>
+        <div style="margin-top: 15px; text-align: right;">
+          <button class="delete-btn" data-id="${item.id}" data-type="news">
+            <i class="fas fa-trash"></i> Удалить
+          </button>
+        </div>
+      `;
+      
+      newsList.appendChild(newsItem);
+    });
+    
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-btn[data-type="news"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteItem(btn.dataset.id, 'news'));
+    });
+  }
+  
+  // Load reviews into the list
+  function loadReviews(reviews) {
+    const reviewsList = document.getElementById('reviews-list');
+    reviewsList.innerHTML = '';
+    
+    reviews.forEach(item => {
+      const reviewItem = document.createElement('div');
+      reviewItem.className = 'data-item';
+      
+      const date = new Date(item.date).toLocaleString();
+      const stars = '★'.repeat(item.rating) + '☆'.repeat(5 - item.rating);
+      
+      reviewItem.innerHTML = `
+        <div class="data-header">
+          <div class="data-title">${item.author}</div>
+          <div class="data-date">${date}</div>
+        </div>
+        <div class="data-rating" style="color: gold; margin-bottom: 10px;">${stars}</div>
+        <div class="data-content">${item.text}</div>
+        <div style="margin-top: 15px; text-align: right;">
+          <button class="delete-btn" data-id="${item.id}" data-type="reviews">
+            <i class="fas fa-trash"></i> Удалить
+          </button>
+        </div>
+      `;
+      
+      reviewsList.appendChild(reviewItem);
+    });
+    
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-btn[data-type="reviews"]').forEach(btn => {
+      btn.addEventListener('click', () => deleteItem(btn.dataset.id, 'reviews'));
+    });
+  }
+  
+  // Delete item (news or review)
+  async function deleteItem(id, type) {
+    if (!confirm(`Вы уверены, что хотите удалить этот ${type === 'news' ? 'новость' : 'отзыв'}?`)) {
+      return;
+    }
+    
+    try {
+      const response = await fetch(`${API_BASE}/${type}/${id}`, {
+        method: 'DELETE'
+      });
+      
+      if (response.ok) {
+        showStatus(`${type === 'news' ? 'Новость' : 'Отзыв'} успешно удален!`, 'success');
+        
+        // Reload data
+        const dataResponse = await fetch(`${API_BASE}/data`);
+        const data = await dataResponse.json();
+        
+        if (type === 'news') {
+          loadNews(data.news);
+        } else {
+          loadReviews(data.reviews);
+        }
+        
+        // Hide status after 3 seconds
+        setTimeout(() => {
+          statusMessage.style.display = 'none';
+        }, 3000);
+        
+      } else {
+        const error = await response.text();
+        showStatus(`Ошибка удаления: ${error}`, 'error');
+      }
+    } catch (error) {
+      showStatus('Ошибка сети: ' + error.message, 'error');
+    }
+  }
+  
+  // Helper functions
+  function showError(message) {
+    loginError.textContent = message;
+    loginError.style.display = 'block';
+    
+    setTimeout(() => {
+      loginError.style.display = 'none';
+    }, 5000);
+  }
+  
+  function showStatus(message, type) {
+    statusMessage.textContent = message;
+    statusMessage.className = `status-message status-${type}`;
+    statusMessage.style.display = 'block';
+  }
+  
+  // Check if already authenticated
+  (async function init() {
+    try {
+      const response = await fetch(`${API_BASE}/data`);
+      if (response.ok) {
+        loadAdminPanel();
+      }
+    } catch (error) {
+      // Not authenticated, show login
+    }
+  })();
+});
+[file content end]
+
+[file name]: deepseek_javascript_20250616_8336a9.js (updated)
+[file content begin]
+require('dotenv').config();
+const express = require('express');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const low = require('lowdb');
+const FileSync = require('lowdb/adapters/FileSync');
+const { Telegraf } = require('telegraf');
+const crypto = require('crypto');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Инициализация базы данных
+const adapter = new FileSync('db.json');
+const db = low(adapter);
+
+// Инициализация структуры БД
+db.defaults({
+  contacts: {
+    bot: { title: "Наш бот", description: "Быстрые ответы 24/7", link: "t.me/our_support_bot" },
+    channel: { title: "Наш канал", description: "Актуальные новости", link: "t.me/our_news_channel" },
+    chat: { title: "Наш чат", description: "Живое общение", link: "t.me/our_community_chat" }
+  },
+  news: [],
+  reviews: [],
+  admin: {
+    login: process.env.ADMIN_LOGIN || 'admin',
+    password: crypto.createHash('sha256').update(process.env.ADMIN_PASSWORD || 'password').digest('hex')
+  },
+  telegram: {
+    newsBotToken: '',
+    reviewsBotToken: '',
+    newsChannelId: '',
+    reviewsChatId: ''
+  },
+  lastUpdate: {
+    news: 0,
+    reviews: 0
+  }
+}).write();
+
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'supersecret',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 } // 1 день
+}));
+
+// Telegram боты
+const newsBot = new Telegraf(db.get('telegram.newsBotToken').value());
+const reviewsBot = new Telegraf(db.get('telegram.reviewsBotToken').value());
+
+// Обработчики Telegram
+newsBot.on('channel_post', (ctx) => {
+  const message = ctx.update.channel_post;
+  if (message.text) {
+    db.get('news').push({
+      id: Date.now(),
+      title: `Новость #${db.get('news').size().value() + 1}`,
+      content: message.text,
+      date: new Date().toISOString()
+    }).write();
+    
+    db.set('lastUpdate.news', Date.now()).write();
+    console.log('Новая новость получена');
+  }
+});
+
+reviewsBot.on('message', (ctx) => {
+  const message = ctx.message;
+  if (message.text && message.text.startsWith('/review')) {
+    const reviewText = message.text.replace('/review', '').trim();
+    
+    db.get('reviews').push({
+      id: Date.now(),
+      author: `${message.from.first_name} ${message.from.last_name || ''}`,
+      text: reviewText,
+      rating: 5,
+      date: new Date().toISOString()
+    }).write();
+    
+    db.set('lastUpdate.reviews', Date.now()).write();
+    console.log('Новый отзыв получен');
+    ctx.reply('Спасибо за ваш отзыв!');
+  }
+});
+
+// Запуск ботов
+if (db.get('telegram.newsBotToken').value()) {
+  newsBot.launch();
+}
+if (db.get('telegram.reviewsBotToken').value()) {
+  reviewsBot.launch();
+}
+
+// Middleware проверки аутентификации
+const isAuthenticated = (req, res, next) => {
+  if (req.session && req.session.authenticated) {
+    return next();
+  }
+  res.status(401).json({ error: 'Требуется аутентификация' });
+};
+
+// API Endpoints
+app.get('/api/data', (req, res) => {
+  res.json({
+    contacts: db.get('contacts').value(),
+    news: db.get('news').value().slice(-5).reverse(),
+    reviews: db.get('reviews').value().slice(-5).reverse(),
+    lastUpdate: db.get('lastUpdate').value(),
+    telegram: db.get('telegram').value()
+  });
+});
+
+app.post('/api/login', (req, res) => {
+  const { login, password } = req.body;
+  const hashedPassword = crypto.createHash('sha256').update(password).digest('hex');
+  
+  if (login === db.get('admin.login').value() && 
+      hashedPassword === db.get('admin.password').value()) {
+    req.session.authenticated = true;
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ error: 'Неверные учетные данные' });
+  }
+});
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy();
+  res.json({ success: true });
+});
+
+app.post('/api/update-contacts', isAuthenticated, (req, res) => {
+  const { contacts } = req.body;
+  db.set('contacts', contacts).write();
+  res.json({ success: true });
+});
+
+app.post('/api/update-telegram', isAuthenticated, (req, res) => {
+  const { telegram } = req.body;
+  
+  // Обновляем токены и перезапускаем ботов
+  db.set('telegram', telegram).write();
+  
+  if (telegram.newsBotToken) {
+    newsBot.telegram.token = telegram.newsBotToken;
+    newsBot.launch();
+  }
+  
+  if (telegram.reviewsBotToken) {
+    reviewsBot.telegram.token = telegram.reviewsBotToken;
+    reviewsBot.launch();
+  }
+  
+  res.json({ success: true });
+});
+
+// New endpoints for admin panel
+app.delete('/api/news/:id', isAuthenticated, (req, res) => {
+  const id = parseInt(req.params.id);
+  db.get('news').remove({ id }).write();
+  res.json({ success: true });
+});
+
+app.delete('/api/reviews/:id', isAuthenticated, (req, res) => {
+  const id = parseInt(req.params.id);
+  db.get('reviews').remove({ id }).write();
+  res.json({ success: true });
+});
+
+// Отдаем фронтенд
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Запуск сервера
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на порту ${PORT}`);
+  console.log(`Админ-логин: ${db.get('admin.login').value()}`);
+  console.log(`Доступ к админ-панели: http://localhost:${PORT}/admin.html`);
+});
+[file content end]
