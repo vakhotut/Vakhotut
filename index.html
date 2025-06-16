@@ -1,386 +1,476 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Флаги на звездах</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/c692fb2f086348608dff21bf207cdb1653f4db48/0x1900-000000-80-d0-0.jpg') no-repeat center center fixed;
-            background-size: cover;
-            overflow: hidden;
-            position: relative;
-            perspective: 1000px;
-        }
-        
-        /* Затемнение фона */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1;
-        }
-        
-        .container {
-            position: relative;
-            z-index: 10;
-            padding: 2rem;
-            width: 100%;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4rem;
-        }
-        
-        .flags-container {
-            display: flex;
-            flex-direction: column;
-            gap: 3.5rem;
-            align-items: center;
-        }
-        
-        /* Контейнер для кнопки и звезды */
-        .flag-container {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
-        }
-        
-        .flag-container:hover {
-            transform: translateY(-10px) scale(1.05);
-        }
-        
-        /* 8-конечная звезда */
-        .star {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #ffd700 0%, #daa520 100%);
-            clip-path: polygon(
-                50% 0%, 61% 35%, 100% 35%, 68% 57%, 
-                79% 100%, 50% 75%, 21% 100%, 32% 57%, 
-                0% 35%, 39% 35%
-            );
-            box-shadow: 
-                0 0 20px rgba(255, 215, 0, 0.8),
-                0 0 40px rgba(255, 215, 0, 0.4),
-                inset 0 0 15px rgba(255, 255, 255, 0.5);
-            z-index: 1;
-        }
-        
-        /* Разделение лучей звезды */
-        .star::before {
-            content: '';
-            position: absolute;
-            width: 90%;
-            height: 90%;
-            top: 5%;
-            left: 5%;
-            background: linear-gradient(45deg, #c9a227 0%, #b8860b 100%);
-            clip-path: polygon(
-                50% 0%, 61% 35%, 100% 35%, 68% 57%, 
-                79% 100%, 50% 75%, 21% 100%, 32% 57%, 
-                0% 35%, 39% 35%
-            );
-            z-index: 2;
-        }
-        
-        /* Круглая кнопка с флагом */
-        .flag-btn {
-            position: relative;
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border: none;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.7),
-                inset 0 -10px 25px rgba(0, 0, 0, 0.4),
-                inset 0 10px 25px rgba(255, 255, 255, 0.3);
-            transform: translateZ(30px);
-            z-index: 3;
-            overflow: hidden;
-            background: white;
-        }
-        
-        .flag-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
-            z-index: 2;
-        }
-        
-        .flag-btn::after {
-            content: '';
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            z-index: 3;
-            pointer-events: none;
-        }
-        
-        .flag-image {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-        
-        .flag-btn:hover {
-            transform: translateZ(40px) rotateZ(5deg);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.8),
-                inset 0 -10px 25px rgba(0, 0, 0, 0.4),
-                inset 0 10px 25px rgba(255, 255, 255, 0.4);
-        }
-        
-        .flag-btn:hover .flag-image {
-            transform: scale(1.05);
-        }
-        
-        .flag-btn:active {
-            transform: translateZ(20px) scale(0.95);
-            box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.5),
-                inset 0 -5px 15px rgba(0, 0, 0, 0.3),
-                inset 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Анимация появления кнопок */
-        .flag-container {
-            opacity: 0;
-            transform: translateY(50px);
-            animation: appear 0.8s forwards;
-        }
-        
-        #georgia { animation-delay: 0.2s; }
-        #russia { animation-delay: 0.4s; }
-        #usa { animation-delay: 0.6s; }
-        
-        @keyframes appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .flag-container {
-                width: 240px;
-                height: 240px;
-            }
-            
-            .flag-btn {
-                width: 150px;
-                height: 150px;
-            }
-            
-            .container {
-                gap: 3rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .flags-container {
-                gap: 3rem;
-            }
-            
-            .flag-container {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .flag-btn {
-                width: 130px;
-                height: 130px;
-            }
-        }
-        
-        @media (max-height: 700px) {
-            .flags-container {
-                gap: 2.5rem;
-            }
-            
-            .flag-container {
-                width: 200px;
-                height: 200px;
-            }
-            
-            .flag-btn {
-                width: 130px;
-                height: 130px;
-            }
-        }
-        
-        @media (max-height: 600px) {
-            .flags-container {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 2rem;
-            }
-            
-            .flag-container {
-                width: 180px;
-                height: 180px;
-            }
-            
-            .flag-btn {
-                width: 120px;
-                height: 120px;
-            }
-        }
-        
-        /* Эффект светового луча */
-        .light-ray {
-            position: absolute;
-            width: 300%;
-            height: 30px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            top: 50%;
-            left: -100%;
-            transform: rotate(45deg) translateY(-50%);
-            opacity: 0.3;
-            animation: rayMove 8s linear infinite;
-            z-index: 4;
-        }
-        
-        @keyframes rayMove {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-        
-        /* Индикатор загрузки */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: opacity 0.5s ease;
-        }
-        
-        .loader {
-            width: 80px;
-            height: 80px;
-            border: 8px solid rgba(255, 215, 0, 0.2);
-            border-top: 8px solid #ffd700;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-    </style>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Флаги на острых звездах</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body {
+      background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/3ee4528df57a29bf72b1360199eee03fa4f96c46/0x1900-000000-80-d0-0.jpg') no-repeat center center fixed;
+      background-size: cover;
+      position:relative;overflow:hidden;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+      min-height:100vh;
+      display:flex;justify-content:center;align-items:center;
+      padding: 20px;
+    }
+    .buttons-container {
+      position:relative;z-index:2;
+      display:flex;flex-wrap:wrap;
+      justify-content:center;align-items:center;
+      gap:60px;padding:80px 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .flag-star {
+      position:relative;
+      width:320px;height:320px;
+      display:flex;justify-content:center;align-items:center;
+      filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+    }
+    .star-svg {
+      position:absolute;inset:0;z-index:1;pointer-events:none;
+      animation: rotateStar 15s infinite linear;
+    }
+    .star-svg svg {width:100%;height:100%}
+    .flag-button {
+      position:relative;
+      width:180px;height:180px;border-radius:50%;overflow:hidden;
+      cursor:pointer;z-index:2;
+      border:3px solid rgba(255,255,255,.9);
+      background:#000;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+    .flag-button img {
+      width:100%;height:100%;object-fit:cover;
+    }
+    
+    /* Декоративные элементы фона */
+    .bg-elements {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-element {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      opacity: 0.3;
+    }
+    
+    /* Анимация вращения звезды */
+    @keyframes rotateStar {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    /* Разные скорости вращения для каждой звезды */
+    .buttons-container .flag-star:nth-child(1) .star-svg {
+      animation-duration: 18s;
+    }
+    .buttons-container .flag-star:nth-child(2) .star-svg {
+      animation-duration: 22s;
+    }
+    .buttons-container .flag-star:nth-child(3) .star-svg {
+      animation-duration: 26s;
+    }
+    
+    @media(max-width: 1100px){
+      .buttons-container { gap: 40px; padding: 60px 20px; }
+      .flag-star { width: 280px; height: 280px; }
+      .flag-button { width: 150px; height: 150px; }
+    }
+    
+    @media(max-width: 768px){
+      .buttons-container { gap: 50px; flex-wrap: wrap; padding: 70px 20px; }
+      .flag-star { width: 240px; height: 240px; }
+    }
+    
+    @media(max-width:480px){
+      .flag-star {width:200px;height:200px}
+      .flag-button {width:120px;height:120px}
+    }
+  </style>
 </head>
 <body>
-    <!-- Индикатор загрузки -->
-    <div class="loading" id="loading">
-        <div class="loader"></div>
+  <div class="bg-elements">
+    <!-- Декоративные элементы фона -->
+  </div>
+  
+  <div class="buttons-container">
+    <!-- Флаг Грузии -->
+    <div class="flag-star">
+      <div class="star-svg">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(50,50)">
+            <!-- Основные лучи - разделены на левую (белую) и правую (черную) части -->
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <!-- Эффект выпуклости -->
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <!-- Дополнительные лучи (между основными) -->
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <!-- Градиент для эффекта выпуклости -->
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
+        </svg>
+      </div>
+      <div class="flag-button">
+        <img src="https://flagcdn.com/w320/ge.png" alt="Флаг Грузии">
+      </div>
     </div>
-    
-    <div class="container">
-        <div class="flags-container">
-            <div class="flag-container" id="georgia">
-                <div class="star"></div>
-                <div class="light-ray"></div>
-                <button class="flag-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/800px-Flag_of_Georgia.svg.png" alt="Грузинский флаг" class="flag-image">
-                </button>
-            </div>
+
+    <!-- Флаг России -->
+    <div class="flag-star">
+      <div class="star-svg">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(50,50)">
+            <!-- Основные лучи - разделены на левую (белую) и правую (черную) части -->
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <!-- Эффект выпуклости -->
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
             
-            <div class="flag-container" id="russia">
-                <div class="star"></div>
-                <div class="light-ray" style="animation-delay: -2s;"></div>
-                <button class="flag-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/800px-Flag_of_Russia.svg.png" alt="Российский флаг" class="flag-image">
-                </button>
-            </div>
+            <!-- Дополнительные лучи (между основными) -->
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
             
-            <div class="flag-container" id="usa">
-                <div class="star"></div>
-                <div class="light-ray" style="animation-delay: -4s;"></div>
-                <button class="flag-btn">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/800px-Flag_of_the_United_States.svg.png" alt="Американский флаг" class="flag-image">
-                </button>
-            </div>
-        </div>
+            <!-- Градиент для эффекта выпуклости -->
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
+        </svg>
+      </div>
+      <div class="flag-button">
+        <img src="https://flagcdn.com/w320/ru.png" alt="Флаг России">
+      </div>
     </div>
+
+    <!-- Флаг США -->
+    <div class="flag-star">
+      <div class="star-svg">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(50,50)">
+            <!-- Основные лучи - разделены на левую (белую) и правую (черную) части -->
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <!-- Эффект выпуклости -->
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <!-- Дополнительные лучи (между основными) -->
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <!-- Градиент для эффекта выпуклости -->
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
+        </svg>
+      </div>
+      <div class="flag-button">
+        <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Создаем декоративные элементы фона
+    const bgContainer = document.querySelector('.bg-elements');
+    const numElements = 15;
     
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Симулируем загрузку изображений
-            setTimeout(() => {
-                document.getElementById('loading').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loading').style.display = 'none';
-                }, 500);
-            }, 1500);
-            
-            const flagBtns = document.querySelectorAll('.flag-btn');
-            
-            flagBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Анимация нажатия
-                    this.style.transform = 'translateZ(20px) scale(0.95)';
-                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
-                    
-                    // Эффект пульсации звезды
-                    const star = this.parentElement.querySelector('.star');
-                    star.style.transition = 'all 0.3s ease';
-                    star.style.transform = 'scale(1.1)';
-                    
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.boxShadow = '';
-                        star.style.transform = '';
-                    }, 300);
-                });
-            });
-        });
-    </script>
+    for (let i = 0; i < numElements; i++) {
+      const element = document.createElement('div');
+      element.classList.add('bg-element');
+      
+      // Случайный размер и позиция
+      const size = Math.random() * 120 + 30;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      
+      element.style.width = `${size}px`;
+      element.style.height = `${size}px`;
+      element.style.left = `${x}%`;
+      element.style.top = `${y}%`;
+      
+      // Анимация движения
+      element.style.animation = `move${i % 3 + 1} ${15 + Math.random() * 20}s infinite linear`;
+      
+      bgContainer.appendChild(element);
+    }
+    
+    // Добавляем стили для анимации
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes move1 {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(20px, 20px); }
+        50% { transform: translate(40px, 0); }
+        75% { transform: translate(20px, -20px); }
+        100% { transform: translate(0, 0); }
+      }
+      @keyframes move2 {
+        0% { transform: translate(0, 0); }
+        25% { transform: translate(-15px, 15px); }
+        50% { transform: translate(-30px, 0); }
+        75% { transform: translate(-15px, -15px); }
+        100% { transform: translate(0, 0); }
+      }
+      @keyframes move3 {
+        0% { transform: translate(0, 0) rotate(0deg); }
+        100% { transform: translate(30px, 30px) rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
 </body>
 </html>
