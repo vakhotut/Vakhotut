@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбор флага</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Флаги на звездах</title>
     <style>
         * {
             margin: 0;
@@ -33,7 +32,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.9) 100%);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1;
         }
         
@@ -88,7 +87,6 @@
                 0 0 40px rgba(255, 215, 0, 0.4),
                 inset 0 0 15px rgba(255, 255, 255, 0.5);
             z-index: 1;
-            animation: rotateStar 20s linear infinite;
         }
         
         /* Разделение лучей звезды */
@@ -160,7 +158,6 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            transform: translateZ(20px);
             transition: transform 0.3s ease;
         }
         
@@ -173,7 +170,7 @@
         }
         
         .flag-btn:hover .flag-image {
-            transform: translateZ(20px) scale(1.05);
+            transform: scale(1.05);
         }
         
         .flag-btn:active {
@@ -182,12 +179,6 @@
                 0 5px 15px rgba(0, 0, 0, 0.5),
                 inset 0 -5px 15px rgba(0, 0, 0, 0.3),
                 inset 0 5px 15px rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Анимации */
-        @keyframes rotateStar {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
         
         /* Анимация появления кнопок */
@@ -208,29 +199,6 @@
             }
         }
         
-        /* Эффект звездного неба */
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 2;
-            pointer-events: none;
-        }
-        
-        .star-particle {
-            position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite ease-in-out;
-        }
-        
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-        
         /* Адаптивность */
         @media (max-width: 768px) {
             .flag-container {
@@ -241,6 +209,10 @@
             .flag-btn {
                 width: 150px;
                 height: 150px;
+            }
+            
+            .container {
+                gap: 3rem;
             }
         }
         
@@ -257,6 +229,41 @@
             .flag-btn {
                 width: 130px;
                 height: 130px;
+            }
+        }
+        
+        @media (max-height: 700px) {
+            .flags-container {
+                gap: 2.5rem;
+            }
+            
+            .flag-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .flag-btn {
+                width: 130px;
+                height: 130px;
+            }
+        }
+        
+        @media (max-height: 600px) {
+            .flags-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 2rem;
+            }
+            
+            .flag-container {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .flag-btn {
+                width: 120px;
+                height: 120px;
             }
         }
         
@@ -278,11 +285,42 @@
             0% { left: -100%; }
             100% { left: 100%; }
         }
+        
+        /* Индикатор загрузки */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(255, 215, 0, 0.2);
+            border-top: 8px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
-    <!-- Эффект звездного неба -->
-    <div class="stars" id="stars"></div>
+    <!-- Индикатор загрузки -->
+    <div class="loading" id="loading">
+        <div class="loader"></div>
+    </div>
     
     <div class="container">
         <div class="flags-container">
@@ -314,8 +352,13 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Создаем звездное небо
-            createStars();
+            // Симулируем загрузку изображений
+            setTimeout(() => {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 1500);
             
             const flagBtns = document.querySelectorAll('.flag-btn');
             
@@ -327,48 +370,16 @@
                     
                     // Эффект пульсации звезды
                     const star = this.parentElement.querySelector('.star');
-                    star.style.animation = 'pulseStar 0.5s ease';
+                    star.style.transition = 'all 0.3s ease';
+                    star.style.transform = 'scale(1.1)';
                     
                     setTimeout(() => {
                         this.style.transform = '';
                         this.style.boxShadow = '';
-                        star.style.animation = '';
+                        star.style.transform = '';
                     }, 300);
                 });
             });
-            
-            function createStars() {
-                const starsContainer = document.getElementById('stars');
-                const starCount = 150;
-                
-                for (let i = 0; i < starCount; i++) {
-                    const star = document.createElement('div');
-                    star.classList.add('star-particle');
-                    
-                    // Случайный размер и позиция
-                    const size = Math.random() * 3;
-                    star.style.width = `${size}px`;
-                    star.style.height = `${size}px`;
-                    star.style.left = `${Math.random() * 100}%`;
-                    star.style.top = `${Math.random() * 100}%`;
-                    
-                    // Случайная задержка анимации
-                    star.style.animationDelay = `${Math.random() * 3}s`;
-                    
-                    starsContainer.appendChild(star);
-                }
-            }
-            
-            // Добавляем стиль для пульсации звезды
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes pulseStar {
-                    0% { transform: scale(1) rotate(0); }
-                    50% { transform: scale(1.1) rotate(10deg); }
-                    100% { transform: scale(1) rotate(0); }
-                }
-            `;
-            document.head.appendChild(style);
         });
     </script>
 </body>
