@@ -2,56 +2,58 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Флаги на звездах</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Воровская звезда с флагами</title>
     <style>
-        body {
-            background-color: #000;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #000;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            flex-direction: column;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
         }
         
-        .button-container {
+        .container {
             display: flex;
             flex-direction: column;
-            gap: 40px;
+            gap: 60px;
+            padding: 40px;
         }
         
         .star-button {
             position: relative;
-            width: 200px;
-            height: 200px;
-            background: gold;
-            clip-path: polygon(
-                50% 0%, 61% 35%, 98% 35%, 68% 57%,
-                79% 91%, 50% 70%, 21% 91%, 32% 57%,
-                2% 35%, 39% 35%
-            );
+            width: 220px;
+            height: 220px;
+            background: none;
             border: none;
             cursor: pointer;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
         
         .star-button:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
         
         .flag-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             width: 100px;
             height: 100px;
             border-radius: 50%;
             overflow: hidden;
             border: 3px solid #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+            z-index: 10;
         }
         
         .flag-circle img {
@@ -59,26 +61,47 @@
             height: 100%;
             object-fit: cover;
         }
+        
+        /* Стили для воровской звезды (точная SVG) */
+        .thief-star {
+            fill: #D4AF37; /* Золотой цвет */
+            stroke: #000;
+            stroke-width: 2;
+            filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.8));
+        }
     </style>
 </head>
 <body>
-    <div class="button-container">
+    <div class="container">
+        <!-- Кнопка с флагом Грузии -->
         <button class="star-button">
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/ge.png" alt="Флаг Грузии">
             </div>
+            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
+                <!-- Точная воровская звезда (8 лучей) -->
+                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
+            </svg>
         </button>
         
+        <!-- Кнопка с флагом России -->
         <button class="star-button">
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/ru.png" alt="Флаг России">
             </div>
+            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
+                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
+            </svg>
         </button>
         
+        <!-- Кнопка с флагом США -->
         <button class="star-button">
             <div class="flag-circle">
                 <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
             </div>
+            <svg class="thief-star" viewBox="0 0 200 200" width="220" height="220">
+                <path d="M100 10 L125 75 L190 75 L140 115 L160 190 L100 150 L40 190 L60 115 L10 75 L75 75 Z" />
+            </svg>
         </button>
     </div>
 </body>
