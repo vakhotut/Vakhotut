@@ -15,7 +15,7 @@
       min-height:100vh;
       display:flex;justify-content:center;align-items:center;
       padding: 20px;
-      transition: opacity 1s ease; /* Добавлено для плавного перехода */
+      transition: opacity 1s ease;
     }
     .buttons-container {
       position:relative;z-index:2;
@@ -42,16 +42,15 @@
       border:3px solid rgba(255,255,255,.9);
       background:#000;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-      transition: transform 0.3s ease; /* Добавлено для плавного увеличения */
+      transition: transform 0.3s ease;
     }
     .flag-button:hover {
-      transform: scale(1.05); /* Эффект увеличения при наведении */
+      transform: scale(1.05);
     }
     .flag-button img {
       width:100%;height:100%;object-fit:cover;
     }
     
-    /* Декоративные элементы фона */
     .bg-elements {
       position: absolute;
       top: 0;
@@ -69,13 +68,11 @@
       opacity: 0.3;
     }
     
-    /* Анимация вращения звезды */
     @keyframes rotateStar {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
     
-    /* Разные скорости вращения для каждой звезды */
     .buttons-container .flag-star:nth-child(1) .star-svg {
       animation-duration: 18s;
     }
@@ -112,7 +109,6 @@
       }
     }
     
-    /* Для очень маленьких экранов */
     @media(max-width: 350px){
       .buttons-container {
         gap: 10px;
@@ -126,21 +122,108 @@
   </style>
 </head>
 <body>
-  <!-- Аудио элемент для фоновой музыки -->
   <audio id="backgroundAudio" loop>
     <source src="https://raw.githubusercontent.com/vakhotut/Vakhotut/main/music.mp3" type="audio/mpeg">
   </audio>
   
-  <div class="bg-elements">
-    <!-- Декоративные элементы фона -->
-  </div>
+  <div class="bg-elements"></div>
   
   <div class="buttons-container">
     <!-- Флаг Грузии -->
     <div class="flag-star">
       <div class="star-svg">
         <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <!-- ... (звезда SVG) ... -->
+          <g transform="translate(50,50)">
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
         </svg>
       </div>
       <div class="flag-button">
@@ -152,7 +235,97 @@
     <div class="flag-star">
       <div class="star-svg">
         <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <!-- ... (звезда SVG) ... -->
+          <g transform="translate(50,50)">
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
         </svg>
       </div>
       <div class="flag-button">
@@ -164,7 +337,97 @@
     <div class="flag-star">
       <div class="star-svg">
         <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
-          <!-- ... (звезда SVG) ... -->
+          <g transform="translate(50,50)">
+            <g transform="rotate(0)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(45)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(90)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(135)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(180)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(225)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(270)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(315)">
+              <path d="M0,-28.125 L0,-58.125 L-10.5,-25.5 Z" fill="white"/>
+              <path d="M0,-28.125 L10.5,-25.5 L0,-58.125 Z" fill="black"/>
+              <path d="M-0.5,-28.125 L-0.5,-58.125 L0.5,-58.125 L0.5,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <g transform="rotate(22.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(67.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(112.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(157.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(202.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(247.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(292.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            <g transform="rotate(337.5)">
+              <path d="M0,-28.125 L0,-43.125 L-5.25,-26.75 Z" fill="white"/>
+              <path d="M0,-28.125 L5.25,-26.75 L0,-43.125 Z" fill="black"/>
+              <path d="M-0.3,-28.125 L-0.3,-43.125 L0.3,-43.125 L0.3,-28.125 Z" fill="url(#convex-gradient)"/>
+            </g>
+            
+            <defs>
+              <linearGradient id="convex-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#aaa" stop-opacity="0.9"/>
+                <stop offset="50%" stop-color="#fff" stop-opacity="0.95"/>
+                <stop offset="100%" stop-color="#aaa" stop-opacity="0.9"/>
+              </linearGradient>
+            </defs>
+          </g>
         </svg>
       </div>
       <div class="flag-button">
@@ -174,7 +437,7 @@
   </div>
   
   <script>
-    // Функция для обновления размеров звезды пропорционально кнопке
+    // Функция для обновления размеров звезды
     function updateStarSizes() {
       const flagStars = document.querySelectorAll('.flag-star');
       
@@ -182,7 +445,6 @@
         const button = star.querySelector('.flag-button');
         if (button) {
           const buttonSize = button.offsetWidth;
-          // Размер звезды = размер кнопки * 1.777 (соотношение 320/180)
           const starSize = buttonSize * 1.777;
           star.style.width = `${starSize}px`;
           star.style.height = `${starSize}px`;
@@ -202,7 +464,6 @@
         const element = document.createElement('div');
         element.classList.add('bg-element');
         
-        // Случайный размер и позиция
         const size = Math.random() * 120 + 30;
         const x = Math.random() * 100;
         const y = Math.random() * 100;
@@ -212,7 +473,6 @@
         element.style.left = `${x}%`;
         element.style.top = `${y}%`;
         
-        // Анимация движения
         element.style.animation = `move${i % 3 + 1} ${15 + Math.random() * 20}s infinite linear`;
         
         bgContainer.appendChild(element);
@@ -245,21 +505,14 @@
     
     // Обновление размеров при изменении окна
     window.addEventListener('resize', updateStarSizes);
-  </script>
-  
-  <!-- Добавленные скрипты -->
-  <script>
+    
     // Автовоспроизведение аудио
-    window.addEventListener('load', () => {
-      const audio = document.getElementById('backgroundAudio');
-      audio.volume = 0.3;
-      setTimeout(() => {
-        audio.play().catch(e => console.log("Автовоспроизведение заблокировано"));
-      }, 1000);
-    });
-  </script>
-
-  <script>
+    const audio = document.getElementById('backgroundAudio');
+    audio.volume = 0.3;
+    setTimeout(() => {
+      audio.play().catch(e => console.log("Автовоспроизведение заблокировано"));
+    }, 1000);
+    
     // Обработчики кликов на флаги
     document.querySelectorAll('.flag-button').forEach(button => {
       button.addEventListener('click', function() {
