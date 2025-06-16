@@ -1,0 +1,7 @@
+express
+express-session
+body-parser
+cors
+lowdb
+telegraf
+dotenv
