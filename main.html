@@ -4,68 +4,404 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Главная страница</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
     body {
-      background: #000 fixed;
-      background-size: cover;
-      background-attachment: fixed;
-      transition: background-image 2s ease-in-out;
+      background: #000;
       min-height: 100vh;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Адаптивный фон с затемнением */
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8));
+      transition: opacity 1.5s ease;
+    }
+    
+    .background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      background-size: cover;
+      background-position: center;
+      transition: background-image 2s ease-in-out;
+      filter: blur(2px);
     }
     
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      background: rgba(0, 0, 0, 0.7);
-      padding: 20px;
-      border-radius: 10px;
-      backdrop-filter: blur(5px);
+      background: rgba(10, 10, 15, 0.85);
+      padding: 30px;
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 195, 255, 0.2);
     }
     
     .section {
-      margin-bottom: 40px;
-      padding: 20px;
-      border-radius: 8px;
-      background: rgba(30, 30, 30, 0.5);
+      margin-bottom: 50px;
+      padding: 30px;
+      border-radius: 12px;
+      background: rgba(20, 25, 40, 0.6);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(0, 195, 255, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 195, 255, 0.2);
     }
     
     h2 {
       border-bottom: 2px solid #00c3ff;
-      padding-bottom: 10px;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+      color: #00c3ff;
+      font-size: 28px;
+      text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+      display: flex;
+      align-items: center;
+    }
+    
+    h2 i {
+      margin-right: 12px;
+      color: #00c3ff;
+    }
+    
+    /* Стили для блока контактов */
+    .contacts-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .contacts-header h3 {
+      font-size: 22px;
+      color: #00c3ff;
+      margin-bottom: 10px;
+    }
+    
+    .contacts-header p {
+      color: #aaa;
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .contact-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    
+    .contact-button {
+      width: 200px;
+      height: 200px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    
+    .contact-button-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    
+    .contact-button:hover .contact-button-inner {
+      transform: rotateY(180deg);
+    }
+    
+    .contact-button-front, .contact-button-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      border-radius: 16px;
+    }
+    
+    .contact-button-front {
+      background: linear-gradient(135deg, #0a192f, #112240);
+      border: 2px solid rgba(0, 195, 255, 0.3);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .contact-button-back {
+      background: linear-gradient(135deg, #112240, #0a192f);
+      transform: rotateY(180deg);
+      border: 2px solid rgba(0, 195, 255, 0.6);
+      box-shadow: 0 5px 20px rgba(0, 195, 255, 0.3);
+    }
+    
+    .contact-button i {
+      font-size: 50px;
       margin-bottom: 20px;
       color: #00c3ff;
+      text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+    }
+    
+    .contact-button h3 {
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    
+    .contact-button p {
+      color: #aaa;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    
+    /* Адаптация для мобильных */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .section {
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+      
+      .contact-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .contact-button {
+        width: 100%;
+        max-width: 280px;
+        height: 160px;
+      }
+      
+      .contact-button i {
+        font-size: 40px;
+        margin-bottom: 15px;
+      }
+      
+      .contact-button h3 {
+        font-size: 20px;
+      }
+      
+      h2 {
+        font-size: 24px;
+      }
+    }
+    
+    /* Стили для других блоков */
+    .content-placeholder {
+      padding: 30px;
+      text-align: center;
+      border-radius: 10px;
+      background: rgba(30, 30, 40, 0.4);
+      margin: 20px 0;
+    }
+    
+    .content-placeholder h3 {
+      color: #00c3ff;
+      margin-bottom: 15px;
+      font-size: 22px;
+    }
+    
+    .content-placeholder p {
+      color: #ccc;
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+    
+    .pulse {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #00c3ff;
+      box-shadow: 0 0 0 0 rgba(0, 195, 255, 0.7);
+      transform: scale(1);
+      animation: pulse 2s infinite;
+      margin-left: 10px;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 195, 255, 0.7);
+      }
+      
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 12px rgba(0, 195, 255, 0);
+      }
+      
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 195, 255, 0);
+      }
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+      font-size: 14px;
+      margin-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Анимация появления */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .section {
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .section:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .section:nth-child(3) {
+      animation-delay: 0.4s;
     }
   </style>
 </head>
 <body>
+  <div class="background-overlay"></div>
+  <div class="background-image" id="bg-image"></div>
+  
   <div class="container">
     <!-- Блок контактов -->
     <section class="section contacts">
-      <h2>Всегда актуальные контакты</h2>
-      <div id="contacts-content">
-        <!-- Контакты будут загружаться динамически -->
+      <h2><i class="fas fa-address-book"></i> Всегда актуальные контакты</h2>
+      
+      <div class="contacts-header">
+        <h3>Свяжитесь с нами удобным для вас способом</h3>
+        <p>Наши контакты всегда актуальны и обновляются в режиме реального времени. Выберите предпочтительный способ связи:</p>
+      </div>
+      
+      <div class="contact-buttons">
+        <!-- Кнопка бота -->
+        <div class="contact-button">
+          <div class="contact-button-inner">
+            <div class="contact-button-front">
+              <i class="fas fa-robot"></i>
+              <h3>Наш бот</h3>
+              <p>Быстрые ответы 24/7</p>
+            </div>
+            <div class="contact-button-back">
+              <h3>Telegram Bot</h3>
+              <p>@our_support_bot</p>
+              <p><i class="fas fa-link"></i> t.me/our_support_bot</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Кнопка канала -->
+        <div class="contact-button">
+          <div class="contact-button-inner">
+            <div class="contact-button-front">
+              <i class="fas fa-bullhorn"></i>
+              <h3>Наш канал</h3>
+              <p>Актуальные новости</p>
+            </div>
+            <div class="contact-button-back">
+              <h3>Telegram Канал</h3>
+              <p>@our_news_channel</p>
+              <p><i class="fas fa-link"></i> t.me/our_news_channel</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Кнопка чата -->
+        <div class="contact-button">
+          <div class="contact-button-inner">
+            <div class="contact-button-front">
+              <i class="fas fa-comments"></i>
+              <h3>Наш чат</h3>
+              <p>Живое общение</p>
+            </div>
+            <div class="contact-button-back">
+              <h3>Telegram Чат</h3>
+              <p>@our_community_chat</p>
+              <p><i class="fas fa-link"></i> t.me/our_community_chat</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     
     <!-- Блок новостей -->
     <section class="section news">
-      <h2>Последние новости</h2>
+      <h2><i class="fas fa-newspaper"></i> Последние новости</h2>
       <div id="news-content">
-        <!-- Новости будут загружаться из Telegram -->
+        <div class="content-placeholder">
+          <h3>Интеграция с Telegram в процессе <span class="pulse"></span></h3>
+          <p>Скоро здесь появятся актуальные новости из нашего Telegram-канала. Мы работаем над интеграцией в режиме реального времени.</p>
+          <p><i class="fas fa-sync-alt fa-spin"></i> Обновление данных каждые 5 минут</p>
+        </div>
       </div>
     </section>
     
     <!-- Блок отзывов -->
     <section class="section reviews">
-      <h2>Отзывы клиентов</h2>
+      <h2><i class="fas fa-star"></i> Отзывы клиентов</h2>
       <div id="reviews-content">
-        <!-- Отзывы будут загружаться из Telegram -->
+        <div class="content-placeholder">
+          <h3>Отзывы из Telegram <span class="pulse"></span></h3>
+          <p>Скоро здесь появятся последние отзывы из нашего Telegram-канала. Мы автоматически собираем обратную связь от наших клиентов.</p>
+          <div class="rating">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+            <span>4.7/5 на основе 248 отзывов</span>
+          </div>
+        </div>
       </div>
     </section>
   </div>
+  
+  <footer>
+    <p>© 2023 Наш Проект. Все права защищены.</p>
+    <p>Свяжитесь с нами через Telegram: @our_support_bot</p>
+  </footer>
   
   <script>
     // Список фоновых изображений
@@ -83,66 +419,36 @@
     ];
     
     let currentBg = 0;
+    const bgImage = document.getElementById('bg-image');
     
     // Функция смены фона
     function changeBackground() {
       currentBg = (currentBg + 1) % backgrounds.length;
-      document.body.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
+      bgImage.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
     }
     
     // Инициализация
     window.addEventListener('load', () => {
       // Начальный фон
-      document.body.style.backgroundImage = `url('${backgrounds[0]}')`;
+      bgImage.style.backgroundImage = `url('${backgrounds[0]}')`;
       
       // Смена фона каждые 5 секунд
       setInterval(changeBackground, 5000);
-      
-      // Загрузка данных
-      loadContacts();
-      loadNews();
-      loadReviews();
     });
     
-    // Загрузка контактов (заглушка)
-    function loadContacts() {
-      const contacts = [
-        {name: "Телефон", value: "+7 (XXX) XXX-XX-XX"},
-        {name: "Email", value: "contact@example.com"},
-        {name: "Telegram", value: "@your_channel"}
-      ];
-      
-      let html = '<div class="contact-list">';
-      contacts.forEach(contact => {
-        html += `<div class="contact-item">
-          <strong>${contact.name}:</strong> ${contact.value}
-        </div>`;
+    // Добавляем обработчики для кнопок
+    document.querySelectorAll('.contact-button').forEach(button => {
+      button.addEventListener('click', function() {
+        // Анимация нажатия
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+        
+        // Здесь будет переход на соответствующий Telegram
+        alert('Переход на выбранный ресурс Telegram');
       });
-      html += '</div>';
-      
-      document.getElementById('contacts-content').innerHTML = html;
-    }
-    
-    // Загрузка новостей (заглушка)
-    function loadNews() {
-      document.getElementById('news-content').innerHTML = `
-        <div class="news-item">
-          <h3>Интеграция с Telegram в процессе</h3>
-          <p>Скоро здесь появятся актуальные новости из нашего Telegram-канала</p>
-          <small>Дата: ${new Date().toLocaleDateString()}</small>
-        </div>
-      `;
-    }
-    
-    // Загрузка отзывов (заглушка)
-    function loadReviews() {
-      document.getElementById('reviews-content').innerHTML = `
-        <div class="review-item">
-          <p>Скоро здесь появятся отзывы из нашего Telegram-канала</p>
-          <div class="rating">★★★★★</div>
-        </div>
-      `;
-    }
+    });
   </script>
 </body>
 </html>
