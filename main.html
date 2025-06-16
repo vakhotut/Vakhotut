@@ -22,7 +22,7 @@
       position: relative;
     }
     
-    /* Адаптивный фон с затемнением */
+    /* Светлый фон с меньшим затемнением */
     .background-overlay {
       position: fixed;
       top: 0;
@@ -30,7 +30,7 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8));
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)); /* Изменено с 0.8 на 0.6 */
       transition: opacity 1.5s ease;
     }
     
@@ -50,7 +50,7 @@
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      background: rgba(10, 10, 15, 0.85);
+      background: rgba(15, 15, 20, 0.8); /* Светлее и немного прозрачнее */
       padding: 30px;
       border-radius: 16px;
       backdrop-filter: blur(8px);
@@ -58,11 +58,12 @@
       border: 1px solid rgba(0, 195, 255, 0.2);
     }
     
+    /* Более прозрачные блоки */
     .section {
       margin-bottom: 50px;
       padding: 30px;
       border-radius: 12px;
-      background: rgba(20, 25, 40, 0.6);
+      background: rgba(20, 25, 40, 0.5); /* Увеличена прозрачность (0.5 вместо 0.6) */
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(0, 195, 255, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -299,20 +300,59 @@
     .section:nth-child(3) {
       animation-delay: 0.4s;
     }
+    
+    /* Кнопка управления звуком */
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      background: rgba(20, 25, 40, 0.8);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      border: 1px solid rgba(0, 195, 255, 0.3);
+      box-shadow: 0 0 15px rgba(0, 195, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .audio-control:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+    }
+    
+    .audio-control i {
+      font-size: 24px;
+      color: #00c3ff;
+    }
   </style>
 </head>
 <body>
+  <!-- Аудио элемент -->
+  <audio id="backgroundAudio" loop>
+    <source src="https://raw.githubusercontent.com/vakhotut/Vakhotut/main/music.mp3" type="audio/mpeg">
+  </audio>
+  
   <div class="background-overlay"></div>
   <div class="background-image" id="bg-image"></div>
+  
+  <!-- Кнопка управления звуком -->
+  <div class="audio-control" id="audioControl">
+    <i class="fas fa-volume-up"></i>
+  </div>
   
   <div class="container">
     <!-- Блок контактов -->
     <section class="section contacts">
-      <h2><i class="fas fa-address-book"></i> Всегда актуальные контакты</h2>
+      <h2><i class="fas fa-address-book"></i> <span data-i18n="contacts-title">Всегда актуальные контакты</span></h2>
       
       <div class="contacts-header">
-        <h3>Свяжитесь с нами удобным для вас способом</h3>
-        <p>Наши контакты всегда актуальны и обновляются в режиме реального времени. Выберите предпочтительный способ связи:</p>
+        <h3 data-i18n="contacts-header">Свяжитесь с нами удобным для вас способом</h3>
+        <p data-i18n="contacts-desc">Наши контакты всегда актуальны и обновляются в режиме реального времени. Выберите предпочтительный способ связи:</p>
       </div>
       
       <div class="contact-buttons">
@@ -321,11 +361,11 @@
           <div class="contact-button-inner">
             <div class="contact-button-front">
               <i class="fas fa-robot"></i>
-              <h3>Наш бот</h3>
-              <p>Быстрые ответы 24/7</p>
+              <h3 data-i18n="bot-title">Наш бот</h3>
+              <p data-i18n="bot-desc">Быстрые ответы 24/7</p>
             </div>
             <div class="contact-button-back">
-              <h3>Telegram Bot</h3>
+              <h3 data-i18n="bot-back">Telegram Bot</h3>
               <p>@our_support_bot</p>
               <p><i class="fas fa-link"></i> t.me/our_support_bot</p>
             </div>
@@ -337,11 +377,11 @@
           <div class="contact-button-inner">
             <div class="contact-button-front">
               <i class="fas fa-bullhorn"></i>
-              <h3>Наш канал</h3>
-              <p>Актуальные новости</p>
+              <h3 data-i18n="channel-title">Наш канал</h3>
+              <p data-i18n="channel-desc">Актуальные новости</p>
             </div>
             <div class="contact-button-back">
-              <h3>Telegram Канал</h3>
+              <h3 data-i18n="channel-back">Telegram Канал</h3>
               <p>@our_news_channel</p>
               <p><i class="fas fa-link"></i> t.me/our_news_channel</p>
             </div>
@@ -353,11 +393,11 @@
           <div class="contact-button-inner">
             <div class="contact-button-front">
               <i class="fas fa-comments"></i>
-              <h3>Наш чат</h3>
-              <p>Живое общение</p>
+              <h3 data-i18n="chat-title">Наш чат</h3>
+              <p data-i18n="chat-desc">Живое общение</p>
             </div>
             <div class="contact-button-back">
-              <h3>Telegram Чат</h3>
+              <h3 data-i18n="chat-back">Telegram Чат</h3>
               <p>@our_community_chat</p>
               <p><i class="fas fa-link"></i> t.me/our_community_chat</p>
             </div>
@@ -368,30 +408,30 @@
     
     <!-- Блок новостей -->
     <section class="section news">
-      <h2><i class="fas fa-newspaper"></i> Последние новости</h2>
+      <h2><i class="fas fa-newspaper"></i> <span data-i18n="news-title">Последние новости</span></h2>
       <div id="news-content">
         <div class="content-placeholder">
-          <h3>Интеграция с Telegram в процессе <span class="pulse"></span></h3>
-          <p>Скоро здесь появятся актуальные новости из нашего Telegram-канала. Мы работаем над интеграцией в режиме реального времени.</p>
-          <p><i class="fas fa-sync-alt fa-spin"></i> Обновление данных каждые 5 минут</p>
+          <h3><span data-i18n="news-text">Интеграция с Telegram в процессе</span> <span class="pulse"></span></h3>
+          <p data-i18n="news-desc">Скоро здесь появятся актуальные новости из нашего Telegram-канала. Мы работаем над интеграцией в режиме реального времени.</p>
+          <p><i class="fas fa-sync-alt fa-spin"></i> <span data-i18n="news-update">Обновление данных каждые 5 минут</span></p>
         </div>
       </div>
     </section>
     
     <!-- Блок отзывов -->
     <section class="section reviews">
-      <h2><i class="fas fa-star"></i> Отзывы клиентов</h2>
+      <h2><i class="fas fa-star"></i> <span data-i18n="reviews-title">Отзывы клиентов</span></h2>
       <div id="reviews-content">
         <div class="content-placeholder">
-          <h3>Отзывы из Telegram <span class="pulse"></span></h3>
-          <p>Скоро здесь появятся последние отзывы из нашего Telegram-канала. Мы автоматически собираем обратную связь от наших клиентов.</p>
+          <h3><span data-i18n="reviews-text">Отзывы из Telegram</span> <span class="pulse"></span></h3>
+          <p data-i18n="reviews-desc">Скоро здесь появятся последние отзывы из нашего Telegram-канала. Мы автоматически собираем обратную связь от наших клиентов.</p>
           <div class="rating">
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star-half-alt"></i>
-            <span>4.7/5 на основе 248 отзывов</span>
+            <span data-i18n="reviews-rating">4.7/5 на основе 248 отзывов</span>
           </div>
         </div>
       </div>
@@ -399,8 +439,8 @@
   </div>
   
   <footer>
-    <p>© 2023 Наш Проект. Все права защищены.</p>
-    <p>Свяжитесь с нами через Telegram: @our_support_bot</p>
+    <p data-i18n="footer">© 2023 Наш Проект. Все права защищены.</p>
+    <p data-i18n="footer-contact">Свяжитесь с нами через Telegram: @our_support_bot</p>
   </footer>
   
   <script>
@@ -427,26 +467,148 @@
       bgImage.style.backgroundImage = `url('${backgrounds[currentBg]}')`;
     }
     
-    // Инициализация
-    window.addEventListener('load', () => {
+    // Функция для перевода страницы
+    function applyTranslations(lang) {
+      const translations = {
+        'ru': {
+          'contacts-title': 'Всегда актуальные контакты',
+          'contacts-header': 'Свяжитесь с нами удобным для вас способом',
+          'contacts-desc': 'Наши контакты всегда актуальны и обновляются в режиме реального времени. Выберите предпочтительный способ связи:',
+          'bot-title': 'Наш бот',
+          'bot-desc': 'Быстрые ответы 24/7',
+          'bot-back': 'Telegram Bot',
+          'channel-title': 'Наш канал',
+          'channel-desc': 'Актуальные новости',
+          'channel-back': 'Telegram Канал',
+          'chat-title': 'Наш чат',
+          'chat-desc': 'Живое общение',
+          'chat-back': 'Telegram Чат',
+          'news-title': 'Последние новости',
+          'news-text': 'Интеграция с Telegram в процессе',
+          'news-desc': 'Скоро здесь появятся актуальные новости из нашего Telegram-канала. Мы работаем над интеграцией в режиме реального времени.',
+          'news-update': 'Обновление данных каждые 5 минут',
+          'reviews-title': 'Отзывы клиентов',
+          'reviews-text': 'Отзывы из Telegram',
+          'reviews-desc': 'Скоро здесь появятся последние отзывы из нашего Telegram-канала. Мы автоматически собираем обратную связь от наших клиентов.',
+          'reviews-rating': '4.7/5 на основе 248 отзывов',
+          'footer': '© 2023 Наш Проект. Все права защищены.',
+          'footer-contact': 'Свяжитесь с нами через Telegram: @our_support_bot'
+        },
+        'en': {
+          'contacts-title': 'Always up-to-date contacts',
+          'contacts-header': 'Contact us in a convenient way',
+          'contacts-desc': 'Our contacts are always up-to-date and updated in real time. Choose your preferred contact method:',
+          'bot-title': 'Our Bot',
+          'bot-desc': 'Quick answers 24/7',
+          'bot-back': 'Telegram Bot',
+          'channel-title': 'Our Channel',
+          'channel-desc': 'Latest news',
+          'channel-back': 'Telegram Channel',
+          'chat-title': 'Our Chat',
+          'chat-desc': 'Live communication',
+          'chat-back': 'Telegram Chat',
+          'news-title': 'Latest News',
+          'news-text': 'Telegram integration in progress',
+          'news-desc': 'Soon the latest news from our Telegram channel will appear here. We are working on real-time integration.',
+          'news-update': 'Data update every 5 minutes',
+          'reviews-title': 'Customer Reviews',
+          'reviews-text': 'Reviews from Telegram',
+          'reviews-desc': 'Soon the latest reviews from our Telegram channel will appear here. We automatically collect feedback from our customers.',
+          'reviews-rating': '4.7/5 based on 248 reviews',
+          'footer': '© 2023 Our Project. All rights reserved.',
+          'footer-contact': 'Contact us via Telegram: @our_support_bot'
+        },
+        'ka': {
+          'contacts-title': 'ყოველთვის განახლებული კონტაქტები',
+          'contacts-header': 'დაგვიკავშირდით თქვენთვის მოსახერხებელი გზით',
+          'contacts-desc': 'ჩვენი კონტაქტები ყოველთვის განახლებულია და რეალურ დროში განახლდება. აირჩიეთ სასურველი საკონტაქტო მეთოდი:',
+          'bot-title': 'ჩვენი ბოტი',
+          'bot-desc': 'სწრაფი პასუხები 24/7',
+          'bot-back': 'Telegram ბოტი',
+          'channel-title': 'ჩვენი არხი',
+          'channel-desc': 'ახალი ამბები',
+          'channel-back': 'Telegram არხი',
+          'chat-title': 'ჩვენი ჩატი',
+          'chat-desc': 'ცოცხალი კომუნიკაცია',
+          'chat-back': 'Telegram ჩატი',
+          'news-title': 'ბოლო ამბები',
+          'news-text': 'Telegram ინტეგრაცია მიმდინარეობს',
+          'news-desc': 'მალე აქ გამოჩნდება უახლესი სიახლეები ჩვენი Telegram არხიდან. ჩვენ ვმუშაობთ რეალურ დროში ინტეგრაციაზე.',
+          'news-update': 'მონაცემების განახლება ყოველ 5 წუთში',
+          'reviews-title': 'მომხმარებელთა მიმოხილვები',
+          'reviews-text': 'მიმოხილვები Telegram-იდან',
+          'reviews-desc': 'მალე აქ გამოჩნდება უახლესი მიმოხილვები ჩვენი Telegram არხიდან. ჩვენ ავტომატურად ვაგროვებთ უკუკავშირს ჩვენი კლიენტებისგან.',
+          'reviews-rating': '4.7/5 248 მიმოხილვის საფუძველზე',
+          'footer': '© 2023 ჩვენი პროექტი. ყველა უფლება დაცულია.',
+          'footer-contact': 'დაგვიკავშირდით Telegram-ით: @our_support_bot'
+        }
+      };
+
+      // Применяем переводы ко всем элементам с data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        } else if (translations['ru'][key]) {
+          // Fallback to Russian if translation not available
+          el.textContent = translations['ru'][key];
+        }
+      });
+    }
+
+    // Инициализация при загрузке
+    window.addEventListener('load', function() {
+      // Получаем язык из URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const lang = urlParams.get('lang') || 'ru';
+      
+      // Применяем перевод
+      applyTranslations(lang);
+      
       // Начальный фон
       bgImage.style.backgroundImage = `url('${backgrounds[0]}')`;
       
       // Смена фона каждые 5 секунд
       setInterval(changeBackground, 5000);
-    });
-    
-    // Добавляем обработчики для кнопок
-    document.querySelectorAll('.contact-button').forEach(button => {
-      button.addEventListener('click', function() {
-        // Анимация нажатия
-        this.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          this.style.transform = '';
-        }, 200);
-        
-        // Здесь будет переход на соответствующий Telegram
-        alert('Переход на выбранный ресурс Telegram');
+      
+      // Аудио управление
+      const audio = document.getElementById('backgroundAudio');
+      const audioControl = document.getElementById('audioControl');
+      let isPlaying = false;
+      
+      // Попытка автоматического воспроизведения
+      audio.volume = 0.3;
+      audio.play().then(() => {
+        isPlaying = true;
+      }).catch(e => {
+        console.log("Autoplay blocked, waiting for user interaction");
+        audioControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+      });
+      
+      // Обработчик клика для управления звуком
+      audioControl.addEventListener('click', () => {
+        if (isPlaying) {
+          audio.pause();
+          audioControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+          audio.play();
+          audioControl.innerHTML = '<i class="fas fa-volume-up"></i>';
+        }
+        isPlaying = !isPlaying;
+      });
+      
+      // Добавляем обработчики для кнопок
+      document.querySelectorAll('.contact-button').forEach(button => {
+        button.addEventListener('click', function() {
+          // Анимация нажатия
+          this.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+          
+          // Здесь будет переход на соответствующий Telegram
+          alert('Переход на выбранный ресурс Telegram');
+        });
       });
     });
   </script>
