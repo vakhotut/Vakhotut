@@ -17,14 +17,13 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(-45deg, #1a2a6c, #b21f1f, #1a2a6c);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/c692fb2f086348608dff21bf207cdb1653f4db48/0x1900-000000-80-d0-0.jpg') no-repeat center center fixed;
+            background-size: cover;
             overflow: hidden;
             position: relative;
         }
         
-        /* Анимированный фон */
+        /* Затемнение фона для лучшей читаемости */
         body::before {
             content: '';
             position: absolute;
@@ -32,10 +31,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 20%);
-            animation: pulse 8s infinite alternate;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
         }
         
         .container {
@@ -43,40 +40,46 @@
             z-index: 10;
             text-align: center;
             padding: 2rem;
+            width: 100%;
+            max-width: 500px;
         }
         
         h1 {
             color: white;
             margin-bottom: 3rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             font-size: 2.5rem;
             letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
         }
         
         .flags-container {
             display: flex;
             flex-direction: column;
             gap: 2.5rem;
+            align-items: center;
         }
         
         .flag-btn {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 240px;
+            height: 240px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: none;
             box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.5),
-                inset 0 -10px 25px rgba(0, 0, 0, 0.3),
-                inset 0 10px 25px rgba(255, 255, 255, 0.2);
+                0 15px 35px rgba(0, 0, 0, 0.7),
+                inset 0 -10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 10px 25px rgba(255, 255, 255, 0.3);
             transform-style: preserve-3d;
             perspective: 1000px;
             overflow: hidden;
+            background: white;
         }
         
         .flag-btn::before {
@@ -87,7 +90,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%);
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%);
             z-index: 2;
         }
         
@@ -99,83 +102,64 @@
             right: 10px;
             bottom: 10px;
             border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.1);
+            border: 4px solid rgba(255, 255, 255, 0.2);
             z-index: 3;
+            pointer-events: none;
         }
         
-        .flag-content {
-            position: relative;
-            z-index: 1;
-            font-size: 7rem;
+        .flag-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
             transform: translateZ(20px);
-            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .country-name {
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            color: white;
+            font-size: 1.8rem;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            letter-spacing: 1px;
+            font-weight: 700;
+            z-index: 4;
+            transition: all 0.3s ease;
         }
         
         .flag-btn:hover {
-            transform: scale(1.08) rotateX(5deg);
+            transform: scale(1.1) rotateX(10deg) rotateY(5deg);
             box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.6),
-                inset 0 -10px 25px rgba(0, 0, 0, 0.3),
-                inset 0 10px 25px rgba(255, 255, 255, 0.3);
+                0 25px 50px rgba(0, 0, 0, 0.8),
+                inset 0 -10px 25px rgba(0, 0, 0, 0.4),
+                inset 0 10px 25px rgba(255, 255, 255, 0.4);
+        }
+        
+        .flag-btn:hover .flag-image {
+            transform: translateZ(20px) scale(1.05);
         }
         
         .flag-btn:active {
-            transform: scale(0.98) rotateX(0deg);
+            transform: scale(0.95) rotateX(0deg) rotateY(0deg);
             box-shadow: 
-                0 5px 15px rgba(0, 0, 0, 0.4),
+                0 5px 15px rgba(0, 0, 0, 0.5),
                 inset 0 -5px 15px rgba(0, 0, 0, 0.3),
                 inset 0 5px 15px rgba(255, 255, 255, 0.2);
         }
         
-        #georgia {
-            background: linear-gradient(135deg, #ff0000 0%, #ff0000 33%, #ffffff 33%, #ffffff 66%, #ff0000 66%, #ff0000 100%);
-        }
-        
-        #russia {
-            background: linear-gradient(to bottom, #ffffff 0%, #ffffff 33%, #0039a6 33%, #0039a6 66%, #d52b1e 66%, #d52b1e 100%);
-        }
-        
-        #usa {
-            background: linear-gradient(135deg, #3c3b6e 0%, #3c3b6e 40%, #ffffff 40%, #ffffff 100%);
-            background-size: 60px 60px;
-            position: relative;
-        }
-        
-        #usa::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 40%;
-            height: 50%;
-            background: repeating-linear-gradient(
-                0deg,
-                #ffffff,
-                #ffffff 4px,
-                #b22234 4px,
-                #b22234 8px
-            );
-        }
-        
-        .country-name {
-            display: block;
-            color: white;
-            font-size: 1.5rem;
-            margin-top: 0.5rem;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-            letter-spacing: 1px;
-        }
-        
         /* Анимации */
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.2); opacity: 0.4; }
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         /* Анимация появления кнопок */
@@ -189,22 +173,26 @@
         #russia { animation-delay: 0.4s; }
         #usa { animation-delay: 0.6s; }
         
-        @keyframes appear {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* Анимация пульсации заголовка */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        h1 {
+            animation: pulse 3s infinite;
         }
         
         /* Адаптивность */
         @media (max-width: 768px) {
             .flag-btn {
-                width: 180px;
-                height: 180px;
+                width: 200px;
+                height: 200px;
             }
             
-            .flag-content {
-                font-size: 5rem;
+            .country-name {
+                font-size: 1.5rem;
             }
             
             h1 {
@@ -214,79 +202,169 @@
         
         @media (max-width: 480px) {
             .flag-btn {
-                width: 150px;
-                height: 150px;
+                width: 170px;
+                height: 170px;
             }
             
-            .flag-content {
-                font-size: 4rem;
+            .country-name {
+                font-size: 1.3rem;
+                bottom: 25px;
             }
             
             h1 {
                 font-size: 1.7rem;
+                margin-bottom: 2rem;
             }
+            
+            .flags-container {
+                gap: 2rem;
+            }
+        }
+        
+        /* Эффект звездного неба */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <!-- Эффект звездного неба -->
+    <div class="stars" id="stars"></div>
+    
     <div class="container">
         <h1>Выберите ваш язык</h1>
         <div class="flags-container">
             <button class="flag-btn" id="georgia">
-                <div class="flag-content">
-                    <span>🇬🇪</span>
-                    <span class="country-name">ქართული</span>
-                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Flag_of_Georgia.svg/800px-Flag_of_Georgia.svg.png" alt="Грузинский флаг" class="flag-image">
+                <span class="country-name">ქართული</span>
             </button>
             <button class="flag-btn" id="russia">
-                <div class="flag-content">
-                    <span>🇷🇺</span>
-                    <span class="country-name">Русский</span>
-                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/f3/Flag_of_Russia.svg/800px-Flag_of_Russia.svg.png" alt="Российский флаг" class="flag-image">
+                <span class="country-name">Русский</span>
             </button>
             <button class="flag-btn" id="usa">
-                <div class="flag-content">
-                    <span>🇺🇸</span>
-                    <span class="country-name">English</span>
-                </div>
+                <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a4/Flag_of_the_United_States.svg/800px-Flag_of_the_United_States.svg.png" alt="Американский флаг" class="flag-image">
+                <span class="country-name">English</span>
             </button>
         </div>
     </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Создаем звездное небо
+            createStars();
+            
             const flags = document.querySelectorAll('.flag-btn');
             
             flags.forEach(flag => {
                 flag.addEventListener('click', function() {
                     // Анимация нажатия
-                    this.style.transform = 'scale(0.95)';
-                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
-                    
-                    setTimeout(() => {
-                        this.style.transform = '';
-                        this.style.boxShadow = '';
-                    }, 200);
+                    this.style.transform = 'scale(0.95) rotateX(0) rotateY(0)';
+                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.5)';
                     
                     // Определяем язык по ID кнопки
                     let language;
+                    let message;
                     switch(this.id) {
                         case 'georgia':
-                            language = 'грузинский';
+                            language = 'ქართული';
+                            message = 'თქვენ აირჩიეთ ქართული ენა!';
                             break;
                         case 'russia':
                             language = 'русский';
+                            message = 'Вы выбрали русский язык!';
                             break;
                         case 'usa':
-                            language = 'английский';
+                            language = 'English';
+                            message = 'You selected English language!';
                             break;
                         default:
                             language = 'язык';
+                            message = 'Выбор языка!';
                     }
                     
-                    alert(`Вы выбрали ${language} язык!`);
+                    // Создаем кастомное уведомление
+                    showNotification(message);
                 });
             });
+            
+            function createStars() {
+                const starsContainer = document.getElementById('stars');
+                const starCount = 150;
+                
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    star.classList.add('star');
+                    
+                    // Случайный размер и позиция
+                    const size = Math.random() * 3;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    
+                    // Случайная задержка анимации
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    
+                    starsContainer.appendChild(star);
+                }
+            }
+            
+            function showNotification(message) {
+                const notification = document.createElement('div');
+                notification.textContent = message;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '20px';
+                notification.style.left = '50%';
+                notification.style.transform = 'translateX(-50%)';
+                notification.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                notification.style.color = '#222';
+                notification.style.padding = '15px 30px';
+                notification.style.borderRadius = '50px';
+                notification.style.fontSize = '1.2rem';
+                notification.style.fontWeight = 'bold';
+                notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                notification.style.zIndex = '100';
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.3s, bottom 0.3s';
+                
+                document.body.appendChild(notification);
+                
+                // Показываем уведомление
+                setTimeout(() => {
+                    notification.style.opacity = '1';
+                    notification.style.bottom = '40px';
+                }, 10);
+                
+                // Убираем уведомление через 3 секунды
+                setTimeout(() => {
+                    notification.style.opacity = '0';
+                    notification.style.bottom = '20px';
+                    
+                    // Удаляем элемент после анимации
+                    setTimeout(() => {
+                        document.body.removeChild(notification);
+                    }, 300);
+                }, 3000);
+            }
         });
     </script>
 </body>
