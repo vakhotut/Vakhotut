@@ -13,9 +13,8 @@
         
         body {
             background-color: #000;
-            color: #fff;
             font-family: 'Arial', sans-serif;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -23,291 +22,190 @@
             position: relative;
         }
         
-        .container {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #4dabf7;
-            text-shadow: 0 0 10px rgba(77, 171, 247, 0.7);
-        }
-        
-        .buttons-container {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-top: 30px;
-            position: relative;
-            z-index: 20;
-        }
-        
-        .lang-btn {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
-            border: 3px solid #4dabf7;
-            color: #fff;
-            font-size: 1.4rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 
-                0 0 15px rgba(77, 171, 247, 0.5),
-                inset 0 0 10px rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .lang-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 
-                0 0 25px rgba(77, 171, 247, 0.8),
-                inset 0 0 15px rgba(0, 0, 0, 0.9);
-            border-color: #74c0fc;
-            background: linear-gradient(145deg, #222222, #111111);
-        }
-        
-        .lang-btn:active {
-            transform: scale(0.95);
-        }
-        
-        /* Анимация пульсации для кнопок */
-        .lang-btn::before {
-            content: '';
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            border-radius: 50%;
-            border: 2px solid rgba(77, 171, 247, 0.3);
-            animation: pulse 2s infinite;
-            z-index: -1;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(0.9);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
-        }
-        
-        /* Звезда морей - основной орнамент */
-        .sea-star {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            animation: rotate 40s linear infinite;
-            z-index: 1;
-            opacity: 0.7;
-            filter: drop-shadow(0 0 10px rgba(77, 171, 247, 0.7));
-        }
-        
-        /* Создаем сложную звезду с помощью CSS */
-        .sea-star::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at center, transparent 45%, #4dabf7 45.5%, transparent 50%),
-                repeating-conic-gradient(
-                    from 0deg,
-                    #4dabf7 0deg 10deg,
-                    transparent 10deg 20deg
-                );
-            border-radius: 50%;
-        }
-        
-        .sea-star::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 80%;
-            height: 80%;
-            transform: translate(-50%, -50%);
-            background: 
-                radial-gradient(circle at center, transparent 55%, #4dabf7 55.5%, transparent 60%),
-                repeating-conic-gradient(
-                    from 10deg,
-                    #4dabf7 0deg 10deg,
-                    transparent 10deg 20deg
-                );
-            border-radius: 50%;
-        }
-        
-        /* Анимация вращения */
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        /* Дополнительные звездочки на фоне */
+        /* Анимированный звездный фон */
         .stars {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
+            background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/1aade2ead539deb905d1827c4b070e5ea3f515a4/foni-papik-pro-vpim-p-kartinki-vorovskie-zvezdi-na-prozrachnom-f-1.png') center/cover;
+            opacity: 0.7;
+            z-index: 1;
         }
         
-        .star {
-            position: absolute;
-            background-color: #fff;
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #fff;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .language-button {
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
-            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            border: 4px solid #444;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5),
+                        inset 0 0 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
         }
         
-        @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-                transform: scale(0.5);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        /* Декоративные элементы */
-        .decoration {
+        .language-button::before {
+            content: "";
             position: absolute;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-        
-        .wave {
-            position: absolute;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 100px;
-            background: radial-gradient(ellipse at center, rgba(77, 171, 247, 0.2) 0%, transparent 70%);
-            animation: wave-animation 10s infinite linear;
+            height: 100%;
+            background: url('https://raw.githubusercontent.com/vakhotut/Vakhotut/1aade2ead539deb905d1827c4b070e5ea3f515a4/foni-papik-pro-vpim-p-kartinki-vorovskie-zvezdi-na-prozrachnom-f-1.png') center/cover;
+            opacity: 0.8;
+            z-index: -1;
         }
         
-        @keyframes wave-animation {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
+        .language-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
+                        inset 0 0 20px rgba(0, 0, 0, 0.6);
+            border-color: gold;
         }
+        
+        .language-button:active {
+            transform: scale(0.95);
+        }
+        
+        .georgian {
+            background: linear-gradient(rgba(255, 0, 0, 0.3), rgba(255, 255, 0, 0.3));
+        }
+        
+        .russian {
+            background: linear-gradient(rgba(0, 0, 255, 0.3), rgba(255, 255, 255, 0.3));
+        }
+        
+        .english {
+            background: linear-gradient(rgba(255, 0, 0, 0.3), rgba(0, 0, 255, 0.3));
+        }
+        
+        /* Анимация звезд */
+        @keyframes twinkle {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        
+        .stars {
+            animation: twinkle 4s infinite;
+        }
+        
+        /* Анимация кнопок */
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .language-button {
+            animation: float 3s infinite ease-in-out;
+        }
+        
+        .georgian { animation-delay: 0s; }
+        .russian { animation-delay: 0.5s; }
+        .english { animation-delay: 1s; }
         
         /* Адаптивность */
-        @media (max-width: 600px) {
-            .lang-btn {
-                width: 140px;
-                height: 140px;
-                font-size: 1.1rem;
-            }
-            
-            .title {
+        @media (max-width: 768px) {
+            h1 {
                 font-size: 2rem;
+                margin-bottom: 40px;
             }
             
-            .sea-star {
-                width: 350px;
-                height: 350px;
+            .language-button {
+                width: 160px;
+                height: 160px;
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 30px;
+            }
+            
+            .language-button {
+                width: 130px;
+                height: 130px;
+                font-size: 1.2rem;
+            }
+            
+            .buttons-container {
+                gap: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Орнамент "Звезда морей" -->
-    <div class="sea-star"></div>
+    <div class="stars"></div>
     
-    <!-- Дополнительные декоративные элементы -->
-    <div class="decoration">
-        <div class="wave"></div>
-    </div>
-    
-    <!-- Фоновые звезды -->
-    <div class="stars" id="stars-container"></div>
-    
-    <!-- Основной контент -->
     <div class="container">
-        <h1 class="title">Выберите язык</h1>
+        <h1>Выберите язык</h1>
+        
         <div class="buttons-container">
-            <button class="lang-btn">ქართული</button>
-            <button class="lang-btn">Русский</button>
-            <button class="lang-btn">English</button>
+            <a href="#" class="language-button georgian">ქართული</a>
+            <a href="#" class="language-button russian">Русский</a>
+            <a href="#" class="language-button english">English</a>
         </div>
     </div>
     
     <script>
-        // Создание фоновых звезд
-        const starsContainer = document.getElementById('stars-container');
-        const starCount = 150;
-        
-        for (let i = 0; i < starCount; i++) {
-            const star = document.createElement('div');
-            star.classList.add('star');
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.language-button');
             
-            // Случайные параметры для звезд
-            const size = Math.random() * 3 + 1;
-            const posX = Math.random() * 100;
-            const posY = Math.random() * 100;
-            const duration = Math.random() * 5 + 2;
-            const delay = Math.random() * 5;
-            
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${posX}%`;
-            star.style.top = `${posY}%`;
-            star.style.setProperty('--duration', `${duration}s`);
-            star.style.animationDelay = `${delay}s`;
-            
-            starsContainer.appendChild(star);
-        }
-        
-        // Обработчики для кнопок
-        const buttons = document.querySelectorAll('.lang-btn');
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Анимация нажатия
-                this.style.transform = 'scale(0.95)';
-                this.style.boxShadow = '0 0 5px rgba(77, 171, 247, 0.8)';
-                
-                // Возврат к исходному состоянию через 300мс
-                setTimeout(() => {
-                    this.style.transform = '';
-                    this.style.boxShadow = '';
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    // Здесь можно добавить логику перехода
+                    // Анимация при нажатии
+                    this.style.transform = 'scale(0.9)';
+                    this.style.boxShadow = '0 0 10px rgba(255, 215, 0, 0.8), inset 0 0 30px rgba(0, 0, 0, 0.9)';
+                    
+                    // Возврат к нормальному состоянию после анимации
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }, 300);
+                    
+                    // Здесь можно добавить логику выбора языка
                     const language = this.textContent;
                     alert(`Выбран язык: ${language}`);
-                }, 300);
+                });
             });
         });
     </script>
