@@ -2,167 +2,84 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Флаги на звездах</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
         body {
             background-color: #000;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            flex-direction: column;
             font-family: Arial, sans-serif;
-            padding: 20px;
         }
         
-        .container {
+        .button-container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 60px;
+            gap: 40px;
         }
         
-        .star-container {
+        .star-button {
             position: relative;
             width: 200px;
-            height: 180px;
+            height: 200px;
+            background: gold;
+            clip-path: polygon(
+                50% 0%, 61% 35%, 98% 35%, 68% 57%,
+                79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                2% 35%, 39% 35%
+            );
+            border: none;
+            cursor: pointer;
+            padding: 0;
             display: flex;
             justify-content: center;
+            align-items: center;
+            transition: transform 0.3s;
         }
         
-        .vorovskaya-zvezda {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 60px solid transparent;
-            border-right: 60px solid transparent;
-            border-bottom: 100px solid #c62828;
-            z-index: 1;
-            filter: drop-shadow(0 0 8px rgba(255, 50, 50, 0.7));
+        .star-button:hover {
+            transform: scale(1.05);
         }
         
-        .vorovskaya-zvezda:after {
-            content: "";
-            position: absolute;
-            left: -60px;
-            top: 100px;
-            width: 0;
-            height: 0;
-            border-left: 60px solid transparent;
-            border-right: 60px solid transparent;
-            border-top: 100px solid #c62828;
-        }
-        
-        .flag-btn {
-            position: relative;
-            z-index: 2;
-            width: 120px;
-            height: 120px;
+        .flag-circle {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
-            border: 4px solid #fff;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-            transform: translateY(40px);
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            border: 3px solid #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
         
-        .flag-btn:hover {
-            transform: translateY(40px) scale(1.1);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
-        }
-        
-        .ge-flag {
-            background-image: 
-                linear-gradient(135deg, #fff 25%, #ff0000 25%, #ff0000 50%, 
-                #fff 50%, #fff 75%, #ff0000 75%, #ff0000 100%);
-            background-size: 70px 70px;
-        }
-        
-        .ru-flag {
-            background-image: 
-                linear-gradient(to bottom, 
-                #fff 33%, 
-                #0039a6 33%, #0039a6 66%, 
-                #d52b1e 66%, #d52b1e 100%);
-        }
-        
-        .en-flag {
-            background-color: #ffffff;
-            background-image: 
-                linear-gradient(90deg, transparent 45%, #C8102E 45%, #C8102E 55%, transparent 55%),
-                linear-gradient(180deg, transparent 45%, #C8102E 45%, #C8102E 55%, transparent 55%);
-        }
-        
-        .label {
-            color: white;
-            margin-top: 70px;
-            font-size: 18px;
-            text-align: center;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-            letter-spacing: 1px;
-        }
-        
-        .title {
-            color: #fff;
-            font-size: 32px;
-            margin-bottom: 50px;
-            text-align: center;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 0 10px rgba(255, 50, 50, 0.8);
+        .flag-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">Выберите язык</h1>
+    <div class="button-container">
+        <button class="star-button">
+            <div class="flag-circle">
+                <img src="https://flagcdn.com/w320/ge.png" alt="Флаг Грузии">
+            </div>
+        </button>
         
-        <div class="star-container">
-            <div class="vorovskaya-zvezda"></div>
-            <button class="flag-btn ge-flag"></button>
-            <div class="label">Грузинский</div>
-        </div>
+        <button class="star-button">
+            <div class="flag-circle">
+                <img src="https://flagcdn.com/w320/ru.png" alt="Флаг России">
+            </div>
+        </button>
         
-        <div class="star-container">
-            <div class="vorovskaya-zvezda"></div>
-            <button class="flag-btn ru-flag"></button>
-            <div class="label">Русский</div>
-        </div>
-        
-        <div class="star-container">
-            <div class="vorovskaya-zvezda"></div>
-            <button class="flag-btn en-flag"></button>
-            <div class="label">Английский</div>
-        </div>
+        <button class="star-button">
+            <div class="flag-circle">
+                <img src="https://flagcdn.com/w320/us.png" alt="Флаг США">
+            </div>
+        </button>
     </div>
-
-    <script>
-        document.querySelectorAll('.flag-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const flagType = this.classList[1];
-                let language;
-                
-                if (flagType === 'ge-flag') language = 'Грузинский';
-                else if (flagType === 'ru-flag') language = 'Русский';
-                else if (flagType === 'en-flag') language = 'Английский';
-                
-                alert(`Выбран ${language} язык`);
-                
-                // Добавляем анимацию нажатия
-                this.style.transform = 'translateY(40px) scale(0.95)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(40px)';
-                }, 300);
-            });
-        });
-    </script>
 </body>
 </html>
