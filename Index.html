@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор языка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #4dabf7;
+            text-shadow: 0 0 10px rgba(77, 171, 247, 0.7);
+        }
+        
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 20;
+        }
+        
+        .lang-btn {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #1a1a1a, #0a0a0a);
+            border: 3px solid #4dabf7;
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 
+                0 0 15px rgba(77, 171, 247, 0.5),
+                inset 0 0 10px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .lang-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 25px rgba(77, 171, 247, 0.8),
+                inset 0 0 15px rgba(0, 0, 0, 0.9);
+            border-color: #74c0fc;
+            background: linear-gradient(145deg, #222222, #111111);
+        }
+        
+        .lang-btn:active {
+            transform: scale(0.95);
+        }
+        
+        /* Анимация пульсации для кнопок */
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            border: 2px solid rgba(77, 171, 247, 0.3);
+            animation: pulse 2s infinite;
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        /* Звезда морей - основной орнамент */
+        .sea-star {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            animation: rotate 40s linear infinite;
+            z-index: 1;
+            opacity: 0.7;
+            filter: drop-shadow(0 0 10px rgba(77, 171, 247, 0.7));
+        }
+        
+        /* Создаем сложную звезду с помощью CSS */
+        .sea-star::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, transparent 45%, #4dabf7 45.5%, transparent 50%),
+                repeating-conic-gradient(
+                    from 0deg,
+                    #4dabf7 0deg 10deg,
+                    transparent 10deg 20deg
+                );
+            border-radius: 50%;
+        }
+        
+        .sea-star::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            transform: translate(-50%, -50%);
+            background: 
+                radial-gradient(circle at center, transparent 55%, #4dabf7 55.5%, transparent 60%),
+                repeating-conic-gradient(
+                    from 10deg,
+                    #4dabf7 0deg 10deg,
+                    transparent 10deg 20deg
+                );
+            border-radius: 50%;
+        }
+        
+        /* Анимация вращения */
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        /* Дополнительные звездочки на фоне */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 3s) infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* Декоративные элементы */
+        .decoration {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: radial-gradient(ellipse at center, rgba(77, 171, 247, 0.2) 0%, transparent 70%);
+            animation: wave-animation 10s infinite linear;
+        }
+        
+        @keyframes wave-animation {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 600px) {
+            .lang-btn {
+                width: 140px;
+                height: 140px;
+                font-size: 1.1rem;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .sea-star {
+                width: 350px;
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Орнамент "Звезда морей" -->
+    <div class="sea-star"></div>
+    
+    <!-- Дополнительные декоративные элементы -->
+    <div class="decoration">
+        <div class="wave"></div>
+    </div>
+    
+    <!-- Фоновые звезды -->
+    <div class="stars" id="stars-container"></div>
+    
+    <!-- Основной контент -->
+    <div class="container">
+        <h1 class="title">Выберите язык</h1>
+        <div class="buttons-container">
+            <button class="lang-btn">ქართული</button>
+            <button class="lang-btn">Русский</button>
+            <button class="lang-btn">English</button>
+        </div>
+    </div>
+    
+    <script>
+        // Создание фоновых звезд
+        const starsContainer = document.getElementById('stars-container');
+        const starCount = 150;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Случайные параметры для звезд
+            const size = Math.random() * 3 + 1;
+            const posX = Math.random() * 100;
+            const posY = Math.random() * 100;
+            const duration = Math.random() * 5 + 2;
+            const delay = Math.random() * 5;
+            
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${posX}%`;
+            star.style.top = `${posY}%`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.animationDelay = `${delay}s`;
+            
+            starsContainer.appendChild(star);
+        }
+        
+        // Обработчики для кнопок
+        const buttons = document.querySelectorAll('.lang-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Анимация нажатия
+                this.style.transform = 'scale(0.95)';
+                this.style.boxShadow = '0 0 5px rgba(77, 171, 247, 0.8)';
+                
+                // Возврат к исходному состоянию через 300мс
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.boxShadow = '';
+                    
+                    // Здесь можно добавить логику перехода
+                    const language = this.textContent;
+                    alert(`Выбран язык: ${language}`);
+                }, 300);
+            });
+        });
+    </script>
+</body>
+</html>
